@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 // Define available themes
 export type ThemeName = 'default' | 'emerald' | 'rose' | 'blue' | 'amber' | 'ocean' | 'forest' | 'olive' | 'sunset' | 'midnight';
@@ -8,6 +9,7 @@ export type ThemeName = 'default' | 'emerald' | 'rose' | 'blue' | 'amber' | 'oce
 interface ThemeContextType {
   theme: ThemeName;
   isDarkMode: boolean;
+  isAdminUser: boolean;
   setTheme: (theme: ThemeName) => void;
   toggleDarkMode: () => void;
 }
@@ -21,6 +23,10 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setThemeState] = useState<ThemeName>('default');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { user } = useAuth();
+  
+  // Check if user is admin
+  const isAdminUser = user?.role === 'ADMIN';
 
   // Initialize theme on component mount
   useEffect(() => {
@@ -56,6 +62,12 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   // Set theme function
   const setTheme = (newTheme: ThemeName) => {
+    // Only allow admin users to change the color theme
+    if (!isAdminUser) {
+      console.log('Only admin users can change the color theme');
+      return;
+    }
+    
     setThemeState(newTheme);
     localStorage.setItem('colorTheme', newTheme);
     
@@ -85,7 +97,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, isDarkMode, setTheme, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ theme, isDarkMode, isAdminUser, setTheme, toggleDarkMode }}>
       {children}
     </ThemeContext.Provider>
   );

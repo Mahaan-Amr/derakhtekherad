@@ -137,9 +137,27 @@ export async function GET(request: NextRequest) {
           }
         },
         enrollments: {
-          select: {
-            id: true,
-            courseId: true
+          include: {
+            course: {
+              select: {
+                id: true,
+                title: true,
+                titleFa: true,
+                level: true,
+                startDate: true,
+                endDate: true,
+                isActive: true,
+                teacher: {
+                  include: {
+                    user: {
+                      select: {
+                        name: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

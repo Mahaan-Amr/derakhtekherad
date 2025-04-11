@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Locale } from '@/app/i18n/settings';
 import { formatDate } from '@/lib/utils';
 import { toast } from 'react-hot-toast';
+import StudentCoursesModal from './StudentCoursesModal';
 
 // Define props
 interface StudentsListProps {
@@ -33,6 +35,10 @@ export default function StudentsList({
   onDeleteStudent, 
   onRefresh 
 }: StudentsListProps) {
+  // State for showing courses modal
+  const [showCoursesModal, setShowCoursesModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<any>(null);
+
   const handleDelete = async (id: string) => {
     if (window.confirm(translations.confirmDelete)) {
       try {
@@ -62,6 +68,11 @@ export default function StudentsList({
         toast.error(err.message || translations.deleteFailed);
       }
     }
+  };
+
+  const handleViewCourses = (student: any) => {
+    setSelectedStudent(student);
+    setShowCoursesModal(true);
   };
 
   return (
@@ -120,9 +131,12 @@ export default function StudentsList({
                 {student.phone || '-'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">
-                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                <button 
+                  onClick={() => handleViewCourses(student)}
+                  className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
+                >
                   {student.enrollments.length} {translations.courseCount}
-                </span>
+                </button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">
                 {formatDate(student.createdAt, locale)}
@@ -145,6 +159,16 @@ export default function StudentsList({
           ))}
         </tbody>
       </table>
+
+      {/* Student Courses Modal */}
+      {showCoursesModal && selectedStudent && (
+        <StudentCoursesModal
+          student={selectedStudent}
+          locale={locale}
+          translations={translations}
+          onClose={() => setShowCoursesModal(false)}
+        />
+      )}
     </div>
   );
 } 

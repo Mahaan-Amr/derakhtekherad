@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Locale } from '@/app/i18n/settings';
+import { useTheme } from '@/app/context/ThemeContext';
 
 // Available color themes
 type ColorTheme = 'default' | 'emerald' | 'rose' | 'blue' | 'amber' | 'ocean' | 'forest' | 'olive' | 'sunset' | 'midnight';
@@ -13,6 +14,7 @@ interface ThemeSelectorProps {
 }
 
 export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: ThemeSelectorProps) {
+  const { isAdminUser } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ColorTheme>('default');
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -27,6 +29,13 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
 
   // Handle theme change
   const changeTheme = (theme: ColorTheme) => {
+    // Only allow admin users to change color theme
+    if (!isAdminUser) {
+      console.log('Only admin users can change the color theme');
+      setIsOpen(false);
+      return;
+    }
+    
     setCurrentTheme(theme);
     localStorage.setItem('colorTheme', theme);
     
@@ -147,102 +156,91 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
         aria-label={locale === 'de' ? 'Thema und Modus ändern' : 'تغییر تم و حالت'}
       >
         <div className="flex items-center">
-          <div 
-            className={`w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 ${
-              colorThemes.find(t => t.id === currentTheme)?.bgClass || 'bg-gray-500'
-            }`}
-          />
+          {isAdminUser && (
+            <div 
+              className={`w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 ${
+                colorThemes.find(t => t.id === currentTheme)?.bgClass || 'bg-gray-500'
+              }`}
+            />
+          )}
+          {!isAdminUser && (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              {isDarkMode ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              )}
+            </svg>
+          )}
         </div>
       </button>
 
       {isOpen && (
         <div 
-          className={`absolute z-50 ${isRtl ? 'right-0' : 'left-0'} mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-700`}
+          className={`absolute z-50 ${isRtl ? 'right-0' : 'left-0'} mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none ${isAdminUser ? 'divide-y divide-gray-100 dark:divide-gray-700' : ''}`}
         >
-          <div className="px-1 py-1">
-            <p className="px-2 py-2 text-sm font-medium text-gray-600 dark:text-gray-300">
-              {locale === 'de' ? 'Farbthema' : 'رنگ تم'}
-            </p>
-            <div className="grid grid-cols-2 gap-1 p-1">
-              {colorThemes.map((theme) => (
-                <button
-                  key={theme.id}
-                  onClick={() => changeTheme(theme.id as ColorTheme)}
-                  className={`flex items-center px-2 py-2 text-sm rounded-md ${
-                    currentTheme === theme.id 
-                      ? 'bg-gray-100 dark:bg-gray-700' 
-                      : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <div 
-                    className={`w-4 h-4 rounded-full mr-2 rtl:ml-2 rtl:mr-0 ${theme.bgClass}`}
-                  />
-                  <span className="text-gray-700 dark:text-gray-200 truncate">
-                    {locale === 'de' ? theme.name.de : theme.name.fa}
-                  </span>
-                  {currentTheme === theme.id && (
-                    <svg 
-                      className={`h-4 w-4 ${isRtl ? 'mr-auto' : 'ml-auto'} text-primary`} 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 20 20" 
-                      fill="currentColor"
-                    >
-                      <path 
-                        fillRule="evenodd" 
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
-                        clipRule="evenodd" 
-                      />
-                    </svg>
-                  )}
-                </button>
-              ))}
+          {/* Color theme selection - only show for admin users */}
+          {isAdminUser && (
+            <div>
+              <p className="px-2 py-2 text-sm font-medium text-gray-600 dark:text-gray-300">
+                {locale === 'de' ? 'Farbthema (Admin)' : 'رنگ تم (فقط برای مدیران)'}
+              </p>
+              <div className="grid grid-cols-2 gap-1 p-1">
+                {colorThemes.map((theme) => (
+                  <button
+                    key={theme.id}
+                    onClick={() => changeTheme(theme.id as ColorTheme)}
+                    className={`flex items-center px-2 py-2 text-sm rounded-md ${
+                      currentTheme === theme.id 
+                        ? 'bg-gray-100 dark:bg-gray-700' 
+                        : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    <div 
+                      className={`w-4 h-4 rounded-full mr-2 rtl:ml-2 rtl:mr-0 ${theme.bgClass}`}
+                    />
+                    <span className="text-gray-700 dark:text-gray-200 truncate">
+                      {locale === 'de' ? theme.name.de : theme.name.fa}
+                    </span>
+                    {currentTheme === theme.id && (
+                      <svg 
+                        className={`h-4 w-4 ${isRtl ? 'mr-auto' : 'ml-auto'} text-primary`} 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 20 20" 
+                        fill="currentColor"
+                      >
+                        <path 
+                          fillRule="evenodd" 
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
+                          clipRule="evenodd" 
+                        />
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           
-          <div className="px-1 py-1">
+          {/* Dark mode toggle - available for all users */}
+          <div className="p-2">
             <button
               onClick={handleDarkModeToggle}
-              className="flex w-full items-center px-2 py-2 text-sm rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+              className="w-full flex items-center px-2 py-2 text-sm rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               {isDarkMode ? (
                 <>
-                  <svg 
-                    className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0 text-yellow-500" 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" 
-                    />
+                  <svg className="w-5 h-5 mr-2 rtl:ml-2 rtl:mr-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
-                  <span className="text-gray-700 dark:text-gray-200">
-                    {locale === 'de' ? 'Zum hellen Modus wechseln' : 'تغییر به حالت روشن'}
-                  </span>
+                  <span>{locale === 'de' ? 'Heller Modus' : 'حالت روشن'}</span>
                 </>
               ) : (
                 <>
-                  <svg 
-                    className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0 text-gray-700" 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" 
-                    />
+                  <svg className="w-5 h-5 mr-2 rtl:ml-2 rtl:mr-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                   </svg>
-                  <span className="text-gray-700 dark:text-gray-200">
-                    {locale === 'de' ? 'Zum dunklen Modus wechseln' : 'تغییر به حالت تاریک'}
-                  </span>
+                  <span>{locale === 'de' ? 'Dunkler Modus' : 'حالت تاریک'}</span>
                 </>
               )}
             </button>
