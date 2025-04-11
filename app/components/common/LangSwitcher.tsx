@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import ReactCountryFlag from 'react-country-flag';
 import { Locale } from '@/app/i18n/settings';
 
@@ -37,17 +36,19 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
   useEffect(() => {
     return () => setIsSwitching(false);
   }, []);
+  
+  // Debug current locale
+  console.log("Current locale:", locale);
 
   return (
     <div 
       className={`relative ${className}`}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      aria-label={locale === 'de' ? 'Switch to Persian language' : 'تغییر به زبان آلمانی'}
-      role="region"
     >
+      {/* Main language switcher container */}
       <div
-        className={`relative h-9 w-24 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer shadow-md overflow-hidden transition-all duration-300 ${
+        className={`relative h-9 w-24 rounded-lg bg-gray-200 dark:bg-gray-700 cursor-pointer shadow-md overflow-hidden transition-all duration-300 ${
           isHovering ? 'ring-2 ring-primary/30' : ''
         } ${isSwitching ? 'opacity-70' : ''}`}
         onClick={toggleLanguage}
@@ -59,78 +60,76 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
             toggleLanguage();
           }
         }}
-        aria-pressed={false}
       >
-        {/* Flag container - flags in fixed positions */}
-        <div className="absolute inset-0 flex items-center justify-between px-2.5 z-10">
-          {/* FA flag (left) */}
-          <div className={`flex flex-col items-center justify-center w-7 transition-all duration-300 ${
-            locale === 'fa' ? 'opacity-100 scale-110' : 'opacity-60'
-          }`}>
-            <ReactCountryFlag 
-              countryCode="IR" 
-              svg 
-              style={{
-                width: '1.4em',
-                height: '1.4em',
-                borderRadius: '3px',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                border: '1px solid rgba(0,0,0,0.06)'
-              }}
-              title="Iran"
-              aria-label="Persian language"
-            />
-            <span className="text-[8px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
-              FA
-            </span>
+        {/* Simple two-column layout */}
+        <div className="flex h-full">
+          {/* Persian (FA) side - Left */}
+          <div 
+            className={`flex-1 flex flex-col items-center justify-center h-full transition-all duration-300 ${
+              locale === 'fa' 
+                ? 'bg-primary/20 dark:bg-primary/30' 
+                : 'bg-transparent hover:bg-gray-300/30 dark:hover:bg-gray-600/30'
+            }`}
+          >
+            <div className={`flex flex-col items-center ${locale === 'fa' ? 'scale-110' : ''}`}>
+              <ReactCountryFlag 
+                countryCode="IR" 
+                svg 
+                style={{
+                  width: '1.4em',
+                  height: '1.4em',
+                  borderRadius: '3px',
+                  boxShadow: locale === 'fa' ? '0 1px 3px rgba(0,0,0,0.2)' : 'none',
+                  border: '1px solid rgba(0,0,0,0.06)'
+                }}
+                title="Iran"
+              />
+              <span className={`text-[8px] mt-0.5 font-medium ${
+                locale === 'fa' 
+                  ? 'text-primary dark:text-primary-light' 
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}>
+                FA
+              </span>
+            </div>
           </div>
           
-          {/* DE flag (right) */}
-          <div className={`flex flex-col items-center justify-center w-7 transition-all duration-300 ${
-            locale === 'de' ? 'opacity-100 scale-110' : 'opacity-60'
-          }`}>
-            <ReactCountryFlag 
-              countryCode="DE" 
-              svg 
-              style={{
-                width: '1.4em',
-                height: '1.4em',
-                borderRadius: '3px',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                border: '1px solid rgba(0,0,0,0.06)'
-              }}
-              title="Germany"
-              aria-label="German language"
-            />
-            <span className="text-[8px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
-              DE
-            </span>
+          {/* German (DE) side - Right */}
+          <div 
+            className={`flex-1 flex flex-col items-center justify-center h-full transition-all duration-300 ${
+              locale === 'de' 
+                ? 'bg-primary/20 dark:bg-primary/30' 
+                : 'bg-transparent hover:bg-gray-300/30 dark:hover:bg-gray-600/30'
+            }`}
+          >
+            <div className={`flex flex-col items-center ${locale === 'de' ? 'scale-110' : ''}`}>
+              <ReactCountryFlag 
+                countryCode="DE" 
+                svg 
+                style={{
+                  width: '1.4em',
+                  height: '1.4em',
+                  borderRadius: '3px',
+                  boxShadow: locale === 'de' ? '0 1px 3px rgba(0,0,0,0.2)' : 'none',
+                  border: '1px solid rgba(0,0,0,0.06)'
+                }}
+                title="Germany"
+              />
+              <span className={`text-[8px] mt-0.5 font-medium ${
+                locale === 'de' 
+                  ? 'text-primary dark:text-primary-light' 
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}>
+                DE
+              </span>
+            </div>
           </div>
         </div>
-        
-        {/* Slider thumb - positioned based on current language */}
-        <div 
-          className={`absolute top-0.5 w-[46%] h-8 bg-gray-800/10 dark:bg-white/10 rounded-md transform transition-all duration-300 ${
-            isHovering ? 'shadow-sm' : ''
-          } ${isSwitching ? 'scale-95' : ''} ${
-            locale === 'fa' 
-              ? 'left-0.5' 
-              : 'right-0.5'
-          }`}
-          aria-hidden="true"
-        ></div>
-        
-        {/* Screen reader only text */}
-        <span className="sr-only">
-          {locale === 'de' 
-            ? 'Currently in German. Click to switch to Persian.' 
-            : 'در حال حاضر به فارسی. برای تغییر به آلمانی کلیک کنید.'}
-        </span>
       </div>
       
       {/* Tooltip on hover */}
       {isHovering && (
-        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs text-white bg-gray-800 rounded shadow whitespace-nowrap">
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs text-white bg-gray-800 rounded shadow whitespace-nowrap z-50">
           {locale === 'de' 
             ? 'Switch to Persian' 
             : 'تغییر به آلمانی'}
