@@ -1,3 +1,74 @@
+# Project Status Update - June 2024
+
+## Recent Achievements
+
+1. **Course Level Enhancement**: Implemented detailed sublevel system for language courses:
+   - Updated course levels to include sublevels (A1.1, A1.2, B1.1, B1.2, etc.)
+   - Modified the CourseEditor component to support the new level format
+   - Updated the display of course levels in all relevant components
+   - Enhanced the LanguageLevelSection component to show level ranges
+
+2. **Price Display Localization**: Improved price display across the platform:
+   - Changed currency display to use Toman/تومان instead of EUR/IRR
+   - Updated price formatting in CourseCard, CoursesList, and course detail pages
+   - Ensured proper localization of prices for both German and Farsi interfaces
+   - Updated schema.org structured data to use proper currency code
+
+3. **Documentation Updates**:
+   - Updated course management documentation to reflect the new level and pricing system
+   - Added the recent changes to the project status and README
+   - Enhanced documentation for future development work
+
+## Technical Implementation Details
+
+### Course Level Enhancement
+
+```typescript
+// Updated level options in CourseEditor
+const levelOptions = ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2', 'C2.1', 'C2.2'];
+
+// Updated level display in LanguageLevelSection
+levels: {
+  a1: locale === 'de' ? 'Anfänger (A1.1-A1.2)' : 'مبتدی (A1.1-A1.2)',
+  b1: locale === 'de' ? 'Mittelstufe (B1.1-B1.2)' : 'متوسط (B1.1-B1.2)',
+  c1: locale === 'de' ? 'Fortgeschritten (C1.1-C1.2)' : 'پیشرفته (C1.1-C1.2)'
+}
+```
+
+### Price Display Localization
+
+```typescript
+// Updated price formatting in CourseCard
+const formatPrice = (price: number) => {
+  // Format number with comma separators
+  const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(price);
+  
+  // Add the appropriate currency text
+  return locale === 'de' 
+    ? `${formattedNumber} Toman` 
+    : `${formattedNumber} تومان`;
+};
+```
+
+## Impact and Benefits
+
+These improvements have:
+
+1. **Enhanced Educational Alignment**: The sublevel system (A1.1, A1.2, etc.) better aligns with standard language proficiency levels
+2. **Improved User Experience**: Localized currency display makes prices more intuitive for users
+3. **Better Regional Relevance**: Using Toman/تومان ensures the platform meets local market expectations
+4. **Increased Precision**: Sublevels provide more granular course categorization for students at different learning stages
+
+## Next Steps
+
+1. Complete student dashboard implementation
+2. Implement student assignment submission system
+3. Develop notification system for new assignments and grades
+4. Continue enhancing user experience across the platform
+
 # Project Status Update - May 2023
 
 ## Recent Achievements

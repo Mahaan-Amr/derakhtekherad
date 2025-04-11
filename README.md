@@ -163,6 +163,8 @@ The project is approximately 95% complete. See [PROJECT_ROADMAP.md](PROJECT_ROAD
 
 ### Recently Completed
 
+- ✅ **Course Level Enhancements**: Updated course levels to include sublevels (A1.1, A1.2, etc.) for more precise language proficiency tracking
+- ✅ **Price Display Localization**: Changed price display across the platform to use Toman/تومان currency with proper localization
 - ✅ **CRUD Functionality Fixes**: Fixed issues with blog post and course deletion
 - ✅ **API Authentication**: Enhanced auth system with dual support for sessions and JWT tokens
 - ✅ **Model Compatibility**: Improved system to handle different database models automatically

@@ -11,8 +11,9 @@ The course management system is a comprehensive solution integrated into the adm
 - **Module Management**: Organize course content into modules
 - **Teacher Assignment**: Assign teachers to courses
 - **Thumbnail Images**: Upload and manage course thumbnail images
-- **Course Details**: Manage course attributes like level, capacity, dates, and location
+- **Course Details**: Manage course attributes like level (with sublevels), capacity, dates, and location
 - **Module Ordering**: Order modules sequentially within courses
+- **Pricing**: Manage course prices in Toman/تومان currency
 
 ## Components
 
@@ -29,6 +30,7 @@ The course management system is a comprehensive solution integrated into the adm
      - Status filtering (active/inactive)
      - Quick actions (edit, delete, view modules)
      - Teacher and level filtering
+     - Price display in Toman/تومان
 
 3. **CourseEditor**: Component for creating and editing courses.
    - Location: `components/dashboard/admin/courses/CourseEditor.tsx`
@@ -39,7 +41,8 @@ The course management system is a comprehensive solution integrated into the adm
      - Multilingual content fields
      - Toggle for active/inactive status
      - Date and time selection
-     - Level selection
+     - Level selection with sublevels (A1.1, A1.2, B1.1, etc.)
+     - Price input with Toman/تومان display
 
 4. **ModulesList**: Component for managing course modules.
    - Location: `components/dashboard/admin/courses/ModulesList.tsx`
@@ -67,7 +70,7 @@ model Course {
   descriptionFa String?   @db.Text
   level         String    // A1.1, A1.2, A2.1, A2.2, B1.1, B1.2, B2.1, B2.2, C1.1, C1.2, C2.1, C2.2
   capacity      Int
-  price         Float     @default(0)
+  price         Float     @default(0)  // Stored as floating point, displayed as Toman/تومان
   startDate     DateTime
   endDate       DateTime
   timeSlot      String    // e.g., "Monday, Wednesday 18:00-20:00"
@@ -174,9 +177,9 @@ The course management system uses the same authentication as the rest of the adm
 4. Fill in the form with content for both languages:
    - Title (German and Farsi)
    - Description (German and Farsi)
-   - Level (A1, A2, B1, B2, C1, C2)
+   - Level (A1.1, A1.2, A2.1, A2.2, B1.1, B1.2, B2.1, B2.2, C1.1, C1.2, C2.1, C2.2)
    - Capacity
-   - Price (numerical value)
+   - Price (in Toman/تومان)
    - Start and end dates
    - Time slot
    - Location

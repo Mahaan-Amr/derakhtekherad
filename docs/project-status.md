@@ -125,6 +125,13 @@ As of June 14, 2024, Derakhte Kherad has made significant progress in several ke
 
 ## Recent Achievements
 
+### June 16, 2024
+- Enhanced course level system to include sublevels (A1.1, A1.2, B1.1, etc.)
+- Updated price display across the application to use Toman/تومان currency
+- Modified all components to properly display and handle the new sublevel format
+- Updated schema documentation to reflect the new course level and pricing approach
+- Ensured proper localization of prices in both German and Farsi interfaces
+
 ### June 14, 2024
 - Implemented Admin Dashboard Analytics with real-time data visualization
 - Created new API endpoints for dashboard statistics
