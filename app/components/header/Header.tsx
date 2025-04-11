@@ -11,6 +11,7 @@ import ProfileButton from '../auth/ProfileButton';
 import { Locale } from '@/app/i18n/settings';
 import ThemeSelector from '../ui/ThemeSelector';
 import Image from 'next/image';
+import LangSwitcher from '../common/LangSwitcher';
 
 interface HeaderProps {
   locale: Locale;
@@ -144,25 +145,9 @@ const Header: React.FC<HeaderProps> = ({
           {/* Header controls: Language switcher, Dark mode toggle, Auth */}
           <div className="hidden md:flex md:items-center space-x-4 rtl:space-x-reverse">
             {/* Language switcher */}
-            <button
-              onClick={switchLanguage}
-              className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary bg-gray-100 dark:bg-gray-800 transition-all hover:scale-110"
-              aria-label={locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
-            >
-              <span className="sr-only">
-                {locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
-              </span>
-              <div className="relative w-7 h-7 overflow-hidden rounded-full border border-gray-200 shadow-sm">
-                <Image 
-                  src={locale === 'de' ? '/flags/iran.png' : '/flags/germany.png'} 
-                  alt={locale === 'de' ? 'Iran Flag' : 'German Flag'} 
-                  width={28} 
-                  height={28} 
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </button>
+            <div className="mr-2">
+              <LangSwitcher locale={locale} />
+            </div>
 
             {/* Theme selector */}
             <div className="mx-2">
@@ -212,25 +197,12 @@ const Header: React.FC<HeaderProps> = ({
             
             <div className="flex items-center justify-between px-3 py-2">
               {/* Language Switcher */}
-              <button
-                onClick={switchLanguage}
-                className="p-2 rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white focus:outline-none flex items-center gap-2"
-                aria-label={locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
-              >
-                <div className="relative w-7 h-7 overflow-hidden rounded-full border border-gray-200 shadow-sm">
-                  <Image 
-                    src={locale === 'de' ? '/flags/iran.png' : '/flags/germany.png'} 
-                    alt={locale === 'de' ? 'Iran Flag' : 'German Flag'} 
-                    width={28} 
-                    height={28} 
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-                <span className="text-sm">
+              <div className="flex items-center">
+                <LangSwitcher locale={locale} />
+                <span className="text-sm ml-2">
                   {locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
                 </span>
-              </button>
+              </div>
               
               {/* Theme selector */}
               <div className="text-gray-500 dark:text-gray-400">
