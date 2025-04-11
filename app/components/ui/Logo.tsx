@@ -46,8 +46,8 @@ export default function Logo({
   // For light mode or dark variant -> use dark background
   const useLight = mounted && (isDarkMode || variant === 'light');
   const bgColorClass = useLight 
-    ? 'bg-white/8' 
-    : 'bg-gray-900/5';
+    ? 'bg-white/10' 
+    : 'bg-gray-900/20';
 
   return (
     <Link 
