@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Locale } from '../../i18n/settings';
+import { useTheme } from '@/app/context/ThemeContext';
+import { useEffect, useState } from 'react';
 
 interface LogoProps {
   locale: Locale;
@@ -17,6 +19,10 @@ export default function Logo({
   variant = 'dark',
   showText = true
 }: LogoProps) {
+  // For theme detection
+  const { isDarkMode } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
   // Text size classes
   const textSizeClasses = {
     sm: 'text-lg',
@@ -29,20 +35,35 @@ export default function Logo({
     dark: 'text-primary hover:text-primary-dark',
     light: 'text-white hover:text-gray-200'
   };
+  
+  // Effect to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Determine background based on theme
+  // For dark mode or light variant -> use light background
+  // For light mode or dark variant -> use dark background
+  const useLight = mounted && (isDarkMode || variant === 'light');
+  const bgColorClass = useLight 
+    ? 'bg-white/15' 
+    : 'bg-gray-900/15';
 
   return (
     <Link 
       href={`/${locale}`} 
       className={`font-bold transition-colors duration-200 tracking-tight flex items-center ${textSizeClasses[textSize]} ${variantClasses[variant]} ${className}`}
     >
-      <Image 
-        src="/logo.png"
-        alt="Derakhte Kherad Logo"
-        width={60}
-        height={60}
-        className="object-contain"
-        unoptimized
-      />
+      <div className={`relative rounded-full flex items-center justify-center p-1.5 ${bgColorClass} transition-colors duration-300`}>
+        <Image 
+          src="/logo.png"
+          alt="Derakhte Kherad Logo"
+          width={60}
+          height={60}
+          className="object-contain"
+          unoptimized
+        />
+      </div>
       {showText && <span className="ml-2">Derakhte Kherad</span>}
     </Link>
   );
