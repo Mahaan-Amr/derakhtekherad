@@ -1,0 +1,14 @@
+{
+  "blogTitle": "وبلاگ",
+  "categories": "دسته‌بندی‌ها",
+  "allCategories": "همه دسته‌بندی‌ها",
+  "readMore": "ادامه مطلب",
+  "noPostsFound": "هیچ مطلبی یافت نشد",
+  "noCategoryPosts": "هیچ مطلبی در دسته‌بندی '{category}' یافت نشد",
+  "relatedPosts": "مطالب مرتبط",
+  "backToAllPosts": "بازگشت به تمام مطالب",
+  "publishedOn": "تاریخ انتشار",
+  "by": "توسط",
+  "home": "خانه",
+  "blog": "وبلاگ"
+} 

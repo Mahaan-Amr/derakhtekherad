@@ -1,0 +1,30 @@
+{
+  "en": {
+    "blogTitle": "Blog",
+    "blog": "Blog",
+    "categories": "Categories",
+    "allCategories": "All",
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "by": "by",
+    "relatedPosts": "Related Posts",
+    "backToAllPosts": "Back to all posts",
+    "noPostsFound": "No posts found",
+    "noCategoryPosts": "No posts found in category '{category}'",
+    "home": "Home"
+  },
+  "fa": {
+    "blogTitle": "وبلاگ",
+    "blog": "وبلاگ",
+    "categories": "دسته‌بندی‌ها",
+    "allCategories": "همه",
+    "readMore": "ادامه مطلب",
+    "publishedOn": "تاریخ انتشار",
+    "by": "نویسنده",
+    "relatedPosts": "مطالب مرتبط",
+    "backToAllPosts": "بازگشت به همه مطالب",
+    "noPostsFound": "هیچ مطلبی یافت نشد",
+    "noCategoryPosts": "هیچ مطلبی در دسته‌بندی '{category}' یافت نشد",
+    "home": "خانه"
+  }
+} 

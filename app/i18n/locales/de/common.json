@@ -1,0 +1,22 @@
+{
+  "title": "Derakhte Kherad - Deutsches Sprachinstitut",
+  "subtitle": "Lernen Sie Deutsch in Shiraz, Iran",
+  "welcome": "Willkommen bei Derakhte Kherad",
+  "navigation": {
+    "home": "Startseite",
+    "about": "Über uns",
+    "courses": "Kurse",
+    "teachers": "Lehrkräfte",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "darkMode": "Dunkler Modus",
+    "lightMode": "Heller Modus"
+  },
+  "footer": {
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "rights": "Alle Rechte vorbehalten"
+  }
+} 

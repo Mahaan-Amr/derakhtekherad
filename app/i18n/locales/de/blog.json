@@ -1,0 +1,14 @@
+{
+  "blogTitle": "Blog",
+  "categories": "Kategorien",
+  "allCategories": "Alle Kategorien",
+  "readMore": "Weiterlesen",
+  "noPostsFound": "Keine Beiträge gefunden",
+  "noCategoryPosts": "Keine Beiträge in der Kategorie '{category}' gefunden",
+  "relatedPosts": "Ähnliche Beiträge",
+  "backToAllPosts": "Zurück zu allen Beiträgen",
+  "publishedOn": "Veröffentlicht am",
+  "by": "von",
+  "home": "Startseite",
+  "blog": "Blog"
+} 

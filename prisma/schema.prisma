@@ -1,0 +1,447 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = []
+  // Add enableTracing option to fix build errors
+  engineType      = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model with role-based access
+model User {
+  id               String    @id @default(cuid())
+  name             String
+  email            String    @unique
+  emailVerified    DateTime?
+  password         String
+  role             Role      @default(STUDENT)
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // Relations
+  student      Student?
+  teacher      Teacher?
+  admin        Admin?
+  posts        Post[]
+  comments     Comment[]
+  statistics   Statistic[]
+  featureItems FeatureItem[]
+  courses      Course[]
+  charters     Charter[]
+
+  @@map("users")
+}
+
+// Admin model
+model Admin {
+  id           String        @id @default(uuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  // Relations
+  courses      Course[]
+  posts        Post[]
+  heroSlides   HeroSlide[]
+  featureItems FeatureItem[]
+  statistics   Statistic[]
+  blogPosts    BlogPost[]
+  charters     Charter[]
+}
+
+// Teacher model
+model Teacher {
+  id          String       @id @default(uuid())
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio         String?
+  bioFa       String? // Farsi bio
+  specialties String?
+  photo       String? // URL to photo
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  // Relations
+  courses     Course[]
+  assignments Assignment[]
+}
+
+// Student model
+model Student {
+  id            String         @id @default(uuid())
+  userId        String         @unique
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone         String?
+  photo         String? // URL to photo
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // Relations
+  enrollments   Enrollment[]
+  submissions   Submission[]
+  quizResponses QuizResponse[]
+}
+
+// Course model
+model Course {
+  id            String         @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  level         String
+  capacity      Int
+  price         Float          @default(0) // Price of the course
+  startDate     DateTime
+  endDate       DateTime
+  timeSlot      String // Time of the day
+  location      String
+  teacherId     String
+  adminId       String
+  isActive      Boolean        @default(true)
+  featured      Boolean        @default(false) // Whether course should be featured on home page
+  thumbnail     String? // URL to course thumbnail image
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // Relations
+  teacher       Teacher        @relation(fields: [teacherId], references: [id])
+  admin         Admin          @relation(fields: [adminId], references: [id])
+  enrollments   Enrollment[]
+  assignments   Assignment[]
+  quizzes       Quiz[]
+  modules       CourseModule[]
+  user          User?          @relation(fields: [userId], references: [id])
+  userId        String?
+}
+
+// Enrollment model
+model Enrollment {
+  id         String           @id @default(uuid())
+  studentId  String
+  courseId   String
+  enrollDate DateTime         @default(now())
+  status     EnrollmentStatus @default(ACTIVE)
+  // Relations
+  student    Student          @relation(fields: [studentId], references: [id])
+  course     Course           @relation(fields: [courseId], references: [id])
+
+  @@unique([studentId, courseId])
+}
+
+// Assignment model
+model Assignment {
+  id            String       @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  dueDate       DateTime
+  courseId      String
+  teacherId     String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  // Relations
+  course        Course       @relation(fields: [courseId], references: [id])
+  teacher       Teacher      @relation(fields: [teacherId], references: [id])
+  submissions   Submission[]
+}
+
+// Submission model
+model Submission {
+  id            String     @id @default(uuid())
+  content       String
+  submittedAt   DateTime   @default(now())
+  grade         Float?
+  feedback      String?
+  studentId     String
+  assignmentId  String
+  attachmentUrl String? // URL to attached file
+  isLate        Boolean    @default(false)
+  status        String     @default("SUBMITTED")
+  gradedAt      DateTime?
+  updatedAt     DateTime   @updatedAt
+  // Relations
+  student       Student    @relation(fields: [studentId], references: [id])
+  assignment    Assignment @relation(fields: [assignmentId], references: [id])
+}
+
+// Quiz model
+model Quiz {
+  id            String         @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  dueDate       DateTime
+  courseId      String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // Relations
+  course        Course         @relation(fields: [courseId], references: [id])
+  questions     Question[]
+  responses     QuizResponse[]
+}
+
+// Question model
+model Question {
+  id      String @id @default(uuid())
+  text    String
+  textFa  String // Farsi text
+  options Json? // Array of choices for multiple choice
+  answer  String // Correct answer
+  points  Int    @default(1)
+  quizId  String
+  // Relations
+  quiz    Quiz   @relation(fields: [quizId], references: [id])
+}
+
+// QuizResponse model
+model QuizResponse {
+  id          String   @id @default(uuid())
+  answers     Json // Student's answers
+  score       Float?
+  submittedAt DateTime @default(now())
+  studentId   String
+  quizId      String
+  // Relations
+  student     Student  @relation(fields: [studentId], references: [id])
+  quiz        Quiz     @relation(fields: [quizId], references: [id])
+}
+
+// Blog Post model (older version to maintain compatibility)
+model Post {
+  id         String         @id @default(uuid())
+  title      String
+  titleFa    String // Farsi title
+  content    String
+  contentFa  String // Farsi content
+  slug       String         @unique
+  thumbnail  String? // URL to image
+  published  Boolean        @default(false)
+  authorId   String
+  userId     String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  // Relations
+  author     Admin          @relation(fields: [authorId], references: [id])
+  user       User?          @relation(fields: [userId], references: [id])
+  categories CategoryPost[]
+  comments   Comment[]
+}
+
+// Enhanced BlogPost model with additional fields
+model BlogPost {
+  id           String   @id @default(uuid())
+  title        String
+  titleFa      String // Farsi title
+  slug         String   @unique
+  excerpt      String // Short description for previews
+  excerptFa    String // Farsi excerpt
+  content      String   @db.Text
+  contentFa    String   @db.Text // Farsi content
+  author       String // Author's name
+  authorImage  String? // URL to author's image
+  publishDate  DateTime @default(now())
+  isPublished  Boolean  @default(true)
+  category     String // Primary category name
+  categoryFa   String // Farsi category name
+  thumbnailUrl String // URL to thumbnail image
+  adminId      String // ID of admin who created the post
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  // Relations
+  admin        Admin    @relation(fields: [adminId], references: [id])
+}
+
+// Category model
+model Category {
+  id            String         @id @default(uuid())
+  name          String
+  nameFa        String // Farsi name
+  slug          String         @unique
+  description   String?
+  descriptionFa String? // Farsi description
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // Relations
+  posts         CategoryPost[]
+}
+
+// Junction table for Category and Post
+model CategoryPost {
+  categoryId String
+  postId     String
+  // Relations
+  category   Category @relation(fields: [categoryId], references: [id])
+  post       Post     @relation(fields: [postId], references: [id])
+
+  @@id([categoryId, postId])
+}
+
+// CourseModule model
+model CourseModule {
+  id            String   @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  orderIndex    Int // To maintain the order of modules in a course
+  courseId      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // Relations
+  course        Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons       Lesson[]
+}
+
+// Lesson model
+model Lesson {
+  id         String       @id @default(uuid())
+  title      String
+  titleFa    String // Farsi title
+  content    String       @db.Text // HTML content or markdown
+  contentFa  String       @db.Text // Farsi content
+  duration   Int? // Estimated duration in minutes
+  orderIndex Int // To maintain the order of lessons in a module
+  moduleId   String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  // Relations
+  module     CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  materials  Material[]
+}
+
+// Material model (for downloadable files, videos, etc.)
+model Material {
+  id            String       @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  type          MaterialType
+  url           String // URL to the file or embedded content
+  lessonId      String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  // Relations
+  lesson        Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+}
+
+// HeroSlide model for the homepage slideshow
+model HeroSlide {
+  id            String   @id @default(uuid())
+  title         String
+  titleFa       String // Farsi title
+  description   String?
+  descriptionFa String? // Farsi description
+  imageUrl      String // URL to the slide image
+  buttonOneText String?
+  buttonOneFa   String? // Farsi text for first button
+  buttonOneLink String?
+  buttonTwoText String?
+  buttonTwoFa   String? // Farsi text for second button
+  buttonTwoLink String?
+  isActive      Boolean  @default(true)
+  orderIndex    Int // To maintain the order of slides
+  adminId       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // Relations
+  admin         Admin    @relation(fields: [adminId], references: [id])
+}
+
+// FeatureItem model for the "Why Choose Us" section
+model FeatureItem {
+  id            String   @id @default(uuid())
+  title         String // German title
+  titleFa       String // Farsi title
+  description   String // German description
+  descriptionFa String // Farsi description
+  iconName      String // Name of the icon to display
+  orderIndex    Int // To maintain the order of features
+  isActive      Boolean  @default(true)
+  adminId       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // Relations
+  admin         Admin    @relation(fields: [adminId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        String?
+}
+
+// Statistics model for displaying stats on the homepage
+model Statistic {
+  id         String   @id @default(uuid())
+  title      String // German title
+  titleFa    String // Farsi title
+  value      String // The value to display (e.g. "98%", "25", "+10", "+1500")
+  orderIndex Int // To maintain the order of statistics
+  isActive   Boolean  @default(true)
+  adminId    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  // Relations
+  admin      Admin    @relation(fields: [adminId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+}
+
+// Enums
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
+enum MaterialType {
+  DOCUMENT
+  VIDEO
+  AUDIO
+  LINK
+  OTHER
+}
+
+model Charter {
+  id            String   @id @default(cuid())
+  title         String
+  titleFa       String
+  description   String   @db.Text
+  descriptionFa String   @db.Text
+  iconName      String?
+  orderIndex    Int      @default(0)
+  isActive      Boolean  @default(true)
+  adminId       String
+  admin         Admin    @relation(fields: [adminId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Comment model for blog posts
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
