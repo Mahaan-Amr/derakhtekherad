@@ -50,19 +50,19 @@ export default function Logo({
     : 'bg-gray-900/20';
 
   // Display the appropriate text based on locale
-  const logoText = locale === 'fa' ? 'درخت خرد' : 'Derakhte Kherad';
+  const logoText = locale === 'fa' ? 'آکادمی تخصصی زبان آلمانی درخت خرد' : 'Derakhte Kherad';
 
   return (
     <Link 
       href={`/${locale}`} 
       className={`font-bold transition-colors duration-200 tracking-tight flex items-center ${textSizeClasses[textSize]} ${variantClasses[variant]} ${className}`}
     >
-      <div className={`w-[58px] h-[58px] flex items-center justify-center rounded-full ${bgColorClass} transition-colors duration-300`}>
+      <div className={`w-[70px] h-[70px] flex items-center justify-center rounded-full ${bgColorClass} transition-colors duration-300`}>
         <Image 
           src="/logo.png"
           alt="Derakhte Kherad Logo"
-          width={50}
-          height={50}
+          width={62}
+          height={62}
           className="object-contain"
           unoptimized
         />
