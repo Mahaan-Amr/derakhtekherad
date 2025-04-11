@@ -46,20 +46,20 @@ export default function Logo({
   // For light mode or dark variant -> use dark background
   const useLight = mounted && (isDarkMode || variant === 'light');
   const bgColorClass = useLight 
-    ? 'bg-white/15' 
-    : 'bg-gray-900/15';
+    ? 'bg-white/8' 
+    : 'bg-gray-900/5';
 
   return (
     <Link 
       href={`/${locale}`} 
       className={`font-bold transition-colors duration-200 tracking-tight flex items-center ${textSizeClasses[textSize]} ${variantClasses[variant]} ${className}`}
     >
-      <div className={`relative rounded-full flex items-center justify-center p-1.5 ${bgColorClass} transition-colors duration-300`}>
+      <div className={`w-[58px] h-[58px] flex items-center justify-center rounded-full ${bgColorClass} transition-colors duration-300`}>
         <Image 
           src="/logo.png"
           alt="Derakhte Kherad Logo"
-          width={60}
-          height={60}
+          width={50}
+          height={50}
           className="object-contain"
           unoptimized
         />
