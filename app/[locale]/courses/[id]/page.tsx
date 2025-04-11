@@ -155,11 +155,16 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
   
   // Format price according to locale
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
-      style: 'currency',
-      currency: locale === 'de' ? 'EUR' : 'IRR',
-      minimumFractionDigits: 0
+    // Format number with comma separators
+    const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(price);
+    
+    // Add the appropriate currency text
+    return locale === 'de' 
+      ? `${formattedNumber} Toman` 
+      : `${formattedNumber} تومان`;
   };
   
   const isRtl = locale === 'fa';

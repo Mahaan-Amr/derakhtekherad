@@ -27,9 +27,9 @@ export default function LanguageLevelSection({ locale }: LanguageLevelSectionPro
       recommendation: locale === 'de' ? 'Kursempfehlung basierend auf Testergebnissen' : 'توصیه دوره مناسب بر اساس نتایج'
     },
     levels: {
-      a1: locale === 'de' ? 'Anfänger' : 'مبتدی',
-      b1: locale === 'de' ? 'Mittelstufe' : 'متوسط',
-      c1: locale === 'de' ? 'Fortgeschritten' : 'پیشرفته'
+      a1: locale === 'de' ? 'Anfänger (A1.1-A1.2)' : 'مبتدی (A1.1-A1.2)',
+      b1: locale === 'de' ? 'Mittelstufe (B1.1-B1.2)' : 'متوسط (B1.1-B1.2)',
+      c1: locale === 'de' ? 'Fortgeschritten (C1.1-C1.2)' : 'پیشرفته (C1.1-C1.2)'
     },
     bookTestButton: locale === 'de' ? 'Einstufungstest buchen' : 'رزرو آزمون تعیین سطح',
     startTodayButton: locale === 'de' ? 'Heute starten' : 'همین امروز شروع کنید!',

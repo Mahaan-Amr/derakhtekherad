@@ -410,11 +410,18 @@ const CoursesList: React.FC<CoursesListProps> = ({ locale, translations, onSelec
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
-                          style: 'currency',
-                          currency: locale === 'de' ? 'EUR' : 'IRR',
-                          minimumFractionDigits: 0
-                        }).format(course.price)}
+                        {(() => {
+                          // Format number with comma separators
+                          const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
+                          }).format(course.price);
+                          
+                          // Add the appropriate currency text
+                          return locale === 'de' 
+                            ? `${formattedNumber} Toman` 
+                            : `${formattedNumber} تومان`;
+                        })()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         {formatDate(course.startDate)}

@@ -155,7 +155,7 @@ export default async function CoursesPage({
         'offers': {
           '@type': 'Offer',
           'price': course.price,
-          'priceCurrency': 'EUR'
+          'priceCurrency': 'IRR'
         }
       }
     }))
