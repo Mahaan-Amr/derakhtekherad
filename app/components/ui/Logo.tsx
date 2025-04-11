@@ -49,6 +49,9 @@ export default function Logo({
     ? 'bg-white/10' 
     : 'bg-gray-900/20';
 
+  // Display the appropriate text based on locale
+  const logoText = locale === 'fa' ? 'درخت خرد' : 'Derakhte Kherad';
+
   return (
     <Link 
       href={`/${locale}`} 
@@ -64,7 +67,7 @@ export default function Logo({
           unoptimized
         />
       </div>
-      {showText && <span className="ml-2">Derakhte Kherad</span>}
+      {showText && <span className="ml-3 md:ml-4">{logoText}</span>}
     </Link>
   );
 } 

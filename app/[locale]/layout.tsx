@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   // In Next.js 13.4+, params is a Promise that needs to be awaited
   const { locale } = await params;
   
-  const title = locale === 'fa' ? 'درخت خرد - موسسه زبان آلمانی' : 'Derakhte Kherad - Deutsches Sprachinstitut';
+  const title = locale === 'fa' ? 'آکادمی تخصصی زبان آلمانی درخت خرد' : 'Derakhte Kherad - Deutsches Sprachakademie';
   const description = locale === 'fa' 
     ? 'آموزش زبان آلمانی در شیراز، ایران' 
     : 'Lernen Sie Deutsch in Shiraz, Iran';
@@ -38,7 +38,11 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     openGraph: {
       title,
       description,
-      images: ['/logo.png'],
+      images: [{
+        url: '/logo.png',
+        width: 800,
+        height: 800
+      }],
       type: 'website',
       url: 'https://derakhtekherad.com',
     },
