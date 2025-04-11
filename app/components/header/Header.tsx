@@ -10,6 +10,7 @@ import AuthModal from '../auth/AuthModal';
 import ProfileButton from '../auth/ProfileButton';
 import { Locale } from '@/app/i18n/settings';
 import ThemeSelector from '../ui/ThemeSelector';
+import Image from 'next/image';
 
 interface HeaderProps {
   locale: Locale;
@@ -151,24 +152,15 @@ const Header: React.FC<HeaderProps> = ({
               <span className="sr-only">
                 {locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
               </span>
-              <div className="relative w-5 h-5 overflow-hidden">
-                <svg 
-                  className="w-5 h-5" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" 
-                  />
-                </svg>
-                <span className="absolute inset-0 flex items-center justify-center text-xs font-bold">
-                  {locale === 'de' ? 'فا' : 'DE'}
-                </span>
+              <div className="relative w-7 h-7 overflow-hidden rounded-full border border-gray-200 shadow-sm">
+                <Image 
+                  src={locale === 'de' ? '/flags/iran.png' : '/flags/germany.png'} 
+                  alt={locale === 'de' ? 'Iran Flag' : 'German Flag'} 
+                  width={28} 
+                  height={28} 
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
             </button>
 
@@ -225,20 +217,16 @@ const Header: React.FC<HeaderProps> = ({
                 className="p-2 rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white focus:outline-none flex items-center gap-2"
                 aria-label={locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
               >
-                <svg 
-                  className="w-5 h-5" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" 
+                <div className="relative w-7 h-7 overflow-hidden rounded-full border border-gray-200 shadow-sm">
+                  <Image 
+                    src={locale === 'de' ? '/flags/iran.png' : '/flags/germany.png'} 
+                    alt={locale === 'de' ? 'Iran Flag' : 'German Flag'} 
+                    width={28} 
+                    height={28} 
+                    className="object-cover"
+                    unoptimized
                   />
-                </svg>
+                </div>
                 <span className="text-sm">
                   {locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
                 </span>

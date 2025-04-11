@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Locale } from '@/app/i18n/settings';
 
 interface LangSwitcherProps {
@@ -16,10 +17,10 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
   // Remove the current locale from the pathname
   const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/home';
   
-  // List of available locales and their display names
-  const locales: { locale: Locale; label: string; }[] = [
-    { locale: 'de', label: 'DE' },
-    { locale: 'fa', label: 'فا' },
+  // List of available locales with their flags and alt text
+  const locales: { locale: Locale; flag: string; alt: string; }[] = [
+    { locale: 'de', flag: '/flags/germany.png', alt: 'German Flag' },
+    { locale: 'fa', flag: '/flags/iran.png', alt: 'Iran Flag' },
   ];
 
   return (
@@ -28,14 +29,22 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
         <Link
           key={item.locale}
           href={`/${item.locale}${pathnameWithoutLocale}`}
-          className={`px-2 py-1 text-sm rounded-md font-medium ${
+          className={`relative p-1 rounded-md transition-all ${
             locale === item.locale
-              ? 'bg-primary text-white'
-              : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+              ? 'scale-110 shadow-md z-10'
+              : 'opacity-70 hover:opacity-100 hover:scale-105'
           }`}
           aria-current={locale === item.locale ? 'page' : undefined}
         >
-          {item.label}
+          <div className="overflow-hidden rounded-full w-7 h-7 border border-gray-200 shadow-sm">
+            <Image 
+              src={item.flag} 
+              alt={item.alt} 
+              width={28} 
+              height={28} 
+              className="object-cover"
+            />
+          </div>
         </Link>
       ))}
     </div>
