@@ -76,31 +76,9 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
         }}
         aria-pressed={false}
       >
-        {/* Slider track */}
+        {/* Fixed positions for flags */}
         <div className="flex items-center justify-between h-full px-2">
-          {/* German flag and label */}
-          <div className={`z-10 flex flex-col items-center justify-center w-8 h-8 transition-opacity duration-300 ${
-            locale === 'de' ? 'opacity-100 scale-105' : 'opacity-60'
-          }`}>
-            <ReactCountryFlag 
-              countryCode="DE" 
-              svg 
-              style={{
-                width: '1.5em',
-                height: '1.5em',
-                borderRadius: '4px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
-                border: '1px solid rgba(0,0,0,0.06)'
-              }}
-              title="Germany"
-              aria-label="German language"
-            />
-            <span className="text-[9px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
-              DE
-            </span>
-          </div>
-          
-          {/* Iran flag and label */}
+          {/* Persian flag and label - always on left */}
           <div className={`z-10 flex flex-col items-center justify-center w-8 h-8 transition-opacity duration-300 ${
             locale === 'fa' ? 'opacity-100 scale-105' : 'opacity-60'
           }`}>
@@ -121,14 +99,36 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
               FA
             </span>
           </div>
+          
+          {/* German flag and label - always on right */}
+          <div className={`z-10 flex flex-col items-center justify-center w-8 h-8 transition-opacity duration-300 ${
+            locale === 'de' ? 'opacity-100 scale-105' : 'opacity-60'
+          }`}>
+            <ReactCountryFlag 
+              countryCode="DE" 
+              svg 
+              style={{
+                width: '1.5em',
+                height: '1.5em',
+                borderRadius: '4px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+                border: '1px solid rgba(0,0,0,0.06)'
+              }}
+              title="Germany"
+              aria-label="German language"
+            />
+            <span className="text-[9px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
+              DE
+            </span>
+          </div>
         </div>
         
-        {/* Slider thumb */}
+        {/* Slider thumb - note the reversed position logic */}
         <div 
           className={`absolute top-1 w-10 h-8 bg-white dark:bg-gray-800 rounded-md shadow-md transform transition-all duration-300 ${
             isHovering ? 'shadow-lg' : 'shadow-md'
           } ${isSwitching ? 'scale-95' : ''} ${
-            locale === 'de' 
+            locale === 'fa' 
               ? 'left-1' 
               : 'right-1'
           }`}
