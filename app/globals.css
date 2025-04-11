@@ -11,14 +11,14 @@
     --emerald: 16, 185, 129;
     
     /* Default theme */
-    --primary: 354 70% 54%;
+    --primary: 0 100% 28%;
     --primary-foreground: 210 40% 98%;
 
-    --primary-dark: 354 70% 44%;
-    --primary-light: 354 70% 64%;
+    --primary-dark: 0 100% 22%;
+    --primary-light: 0 100% 34%;
     
     /* RGB values for rgba() usage */
-    --color-primary-rgb: 220, 38, 38;
+    --color-primary-rgb: 144, 0, 0;
     
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -39,9 +39,9 @@
     --radius: 0.5rem;
 
     /* For components using var(--color-*) format */
-    --color-primary: #dc2626;
-    --color-primary-dark: #b91c1c;
-    --color-primary-light: #ef4444;
+    --color-primary: #900000;
+    --color-primary-dark: #700000;
+    --color-primary-light: #ad0000;
     --color-secondary: #4B5563;
     --color-secondary-dark: #1F2937;
     --color-secondary-light: #F3F4F6;
