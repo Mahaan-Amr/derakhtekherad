@@ -20,12 +20,6 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
   // Remove the current locale from the pathname
   const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/home';
   
-  // Flag codes
-  const flagCodes = {
-    de: 'DE',
-    fa: 'IR'
-  };
-
   // Switch to the other language
   const toggleLanguage = () => {
     if (isSwitching) return; // Prevent multiple clicks during transition
@@ -44,15 +38,6 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
     return () => setIsSwitching(false);
   }, []);
 
-  // Calculate whether we need a left-to-right or right-to-left layout
-  const isRtl = locale === 'fa';
-  
-  // Language names in their native form
-  const languageLabels = {
-    de: 'Deutsch',
-    fa: 'فارسی'
-  };
-
   return (
     <div 
       className={`relative ${className}`}
@@ -62,7 +47,7 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
       role="region"
     >
       <div
-        className={`relative h-10 w-24 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer shadow-md overflow-hidden transition-all duration-300 ${
+        className={`relative h-9 w-24 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer shadow-md overflow-hidden transition-all duration-300 ${
           isHovering ? 'ring-2 ring-primary/30' : ''
         } ${isSwitching ? 'opacity-70' : ''}`}
         onClick={toggleLanguage}
@@ -76,66 +61,66 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
         }}
         aria-pressed={false}
       >
-        {/* Fixed positions for flags */}
-        <div className="flex items-center justify-between h-full px-2">
-          {/* Persian flag and label - always on left */}
-          <div className={`z-10 flex flex-col items-center justify-center w-8 h-8 transition-opacity duration-300 ${
-            locale === 'fa' ? 'opacity-100 scale-105' : 'opacity-60'
+        {/* Flag container - flags in fixed positions */}
+        <div className="absolute inset-0 flex items-center justify-between px-2.5 z-10">
+          {/* FA flag (left) */}
+          <div className={`flex flex-col items-center justify-center w-7 transition-all duration-300 ${
+            locale === 'fa' ? 'opacity-100 scale-110' : 'opacity-60'
           }`}>
             <ReactCountryFlag 
               countryCode="IR" 
               svg 
               style={{
-                width: '1.5em',
-                height: '1.5em',
-                borderRadius: '4px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+                width: '1.4em',
+                height: '1.4em',
+                borderRadius: '3px',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                 border: '1px solid rgba(0,0,0,0.06)'
               }}
               title="Iran"
               aria-label="Persian language"
             />
-            <span className="text-[9px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
+            <span className="text-[8px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
               FA
             </span>
           </div>
           
-          {/* German flag and label - always on right */}
-          <div className={`z-10 flex flex-col items-center justify-center w-8 h-8 transition-opacity duration-300 ${
-            locale === 'de' ? 'opacity-100 scale-105' : 'opacity-60'
+          {/* DE flag (right) */}
+          <div className={`flex flex-col items-center justify-center w-7 transition-all duration-300 ${
+            locale === 'de' ? 'opacity-100 scale-110' : 'opacity-60'
           }`}>
             <ReactCountryFlag 
               countryCode="DE" 
               svg 
               style={{
-                width: '1.5em',
-                height: '1.5em',
-                borderRadius: '4px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+                width: '1.4em',
+                height: '1.4em',
+                borderRadius: '3px',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                 border: '1px solid rgba(0,0,0,0.06)'
               }}
               title="Germany"
               aria-label="German language"
             />
-            <span className="text-[9px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
+            <span className="text-[8px] mt-0.5 font-medium text-gray-600 dark:text-gray-300">
               DE
             </span>
           </div>
         </div>
         
-        {/* Slider thumb - note the reversed position logic */}
+        {/* Slider thumb - positioned based on current language */}
         <div 
-          className={`absolute top-1 w-10 h-8 bg-white dark:bg-gray-800 rounded-md shadow-md transform transition-all duration-300 ${
-            isHovering ? 'shadow-lg' : 'shadow-md'
+          className={`absolute top-0.5 w-[46%] h-8 bg-gray-800/10 dark:bg-white/10 rounded-md transform transition-all duration-300 ${
+            isHovering ? 'shadow-sm' : ''
           } ${isSwitching ? 'scale-95' : ''} ${
             locale === 'fa' 
-              ? 'left-1' 
-              : 'right-1'
+              ? 'left-0.5' 
+              : 'right-0.5'
           }`}
           aria-hidden="true"
         ></div>
         
-        {/* Active language indicator (Screen reader only) */}
+        {/* Screen reader only text */}
         <span className="sr-only">
           {locale === 'de' 
             ? 'Currently in German. Click to switch to Persian.' 
