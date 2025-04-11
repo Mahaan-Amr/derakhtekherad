@@ -30,7 +30,7 @@ export async function generateMetadata({
   return generateSeoMetadata({
     title: {
       de: 'Startseite',
-      fa: 'صفحه اصلی'
+      fa: 'آکادمی تخصصی زبان آلمانی درخت خرد'
     },
     description: {
       de: 'Derakhte Kherad ist ein führendes Institut für das Erlernen der deutschen Sprache in Shiraz, Iran. Wir bieten hochwertige Sprachkurse für alle Niveaus an.',
