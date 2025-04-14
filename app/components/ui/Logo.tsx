@@ -43,13 +43,8 @@ export default function Logo({
     setMounted(true);
   }, []);
   
-  // Determine background based on theme
-  // For dark mode or light variant -> use light background
-  // For light mode or dark variant -> use dark background
-  const useLight = mounted && (isDarkMode || variant === 'light');
-  const bgColorClass = useLight 
-    ? 'bg-white/10' 
-    : 'bg-gray-900/20';
+  // Always use solid white background
+  const bgColorClass = 'bg-white';
 
   // Display the appropriate text based on locale
   const logoText = locale === 'fa' ? 'درخت خرد' : 'Derakhte Kherad';
