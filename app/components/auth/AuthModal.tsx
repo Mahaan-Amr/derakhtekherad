@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ForgotPasswordForm from './ForgotPasswordForm';
@@ -26,6 +26,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
 }) => {
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const isRtl = locale === 'fa';
+  
+  // Update mode when initialMode changes
+  useEffect(() => {
+    if (initialMode) {
+      setMode(initialMode);
+    }
+  }, [initialMode]);
 
   if (!isOpen) return null;
 
