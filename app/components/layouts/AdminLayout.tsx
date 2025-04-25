@@ -15,7 +15,7 @@ interface AdminLayoutProps {
 const getDefaultTranslations = (locale: Locale) => ({
   navigation: {
     home: locale === 'de' ? 'Startseite' : 'صفحه اصلی',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
     courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
     teachers: locale === 'de' ? 'Lehrer' : 'اساتید',
     blog: locale === 'de' ? 'Blog' : 'وبلاگ',

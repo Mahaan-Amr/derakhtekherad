@@ -6,6 +6,7 @@ import { generateSeoMetadata, generateOrganizationSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
 import prisma from '@/lib/db';
 import { Course } from '@/app/types/course';
+import { getFooterData } from '@/app/lib/footer';
 
 export async function generateMetadata({ 
   params 
@@ -46,6 +47,19 @@ export default async function CoursesPage({
   // Access locale asynchronously
   const { locale } = await params;
   
+  // Define navigation translations
+  const nav = {
+    home: locale === 'de' ? 'Startseite' : 'خانه',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
+    courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
+    blog: locale === 'de' ? 'Blog' : 'وبلاگ',
+    contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
+    consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
+  };
+  
+  // Get footer data using the utility function
+  const footer = getFooterData(locale as Locale, nav);
+  
   // Basic translations for CourseList component
   const courseTranslations = {
     title: locale === 'de' ? 'Unsere Sprachkurse' : 'دوره‌های زبان ما',
@@ -58,51 +72,6 @@ export default async function CoursesPage({
       : 'آیا به یک دوره زبان خاص نیاز دارید؟ ما همچنین دوره‌های سفارشی برای افراد یا گروه‌ها ارائه می‌دهیم.',
     contactUs: locale === 'de' ? 'Kontaktieren Sie uns' : 'با ما تماس بگیرید',
     noCoursesFound: locale === 'de' ? 'Keine Kurse gefunden.' : 'هیچ دوره‌ای یافت نشد.'
-  };
-  
-  // Navigation translations
-  const nav = {
-    home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
-    courses: locale === 'de' ? 'Kurse' : 'دوره ها',
-    blog: locale === 'de' ? 'Blog' : 'بلاگ',
-    contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-    consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
-    login: locale === 'de' ? 'Anmelden' : 'ورود',
-    signup: locale === 'de' ? 'Registrieren' : 'ثبت نام',
-  };
-  
-  // Create footer data for the MainLayout
-  const footer = {
-    about: {
-      title: locale === 'de' ? 'Über Derakhte Kherad' : 'درباره درخت خرد',
-      description: locale === 'de' 
-        ? 'Derakhte Kherad ist eine spezialisierte Sprachschule, die sich der Vermittlung der deutschen Sprache an persischsprachige Lernende widmet.'
-        : 'درخت خرد یک مدرسه زبان تخصصی است که به آموزش زبان آلمانی به فارسی‌زبانان اختصاص دارد.'
-    },
-    quickLinks: {
-      title: locale === 'de' ? 'Schnelle Links' : 'لینک‌های سریع',
-      links: [
-        {
-          title: locale === 'de' ? 'Startseite' : 'خانه',
-          href: `/${locale}`
-        },
-        {
-          title: locale === 'de' ? 'Kurse' : 'دوره‌ها',
-          href: `/${locale}/courses`
-        },
-        {
-          title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-          href: `/${locale}/contact`
-        }
-      ]
-    },
-    contact: {
-      title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      address: locale === 'de' ? 'Musterstraße 123, 12345 Berlin, Deutschland' : 'خیابان نمونه ۱۲۳، برلین، آلمان',
-      email: 'info@derakhtekherad.com',
-      phone: '+49 123 456789'
-    }
   };
   
   // Fetch courses for structured data

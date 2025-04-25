@@ -4,6 +4,7 @@ import MainLayout from '@/app/components/layouts/MainLayout';
 import ImageWithFallback from '@/app/components/ui/ImageWithFallback';
 import { generateSeoMetadata, generateOrganizationSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
+import { getFooterData } from '@/app/lib/footer';
 
 export const generateMetadata = async ({ 
   params 
@@ -14,7 +15,7 @@ export const generateMetadata = async ({
   
   return generateSeoMetadata({
     title: {
-      de: 'Über uns',
+      de: 'Über',
       fa: 'درباره ما'
     },
     description: {
@@ -30,7 +31,7 @@ export const generateMetadata = async ({
       }
     },
     keywords: {
-      de: ['Über uns', 'Derakhte Kherad Geschichte', 'Deutsche Sprachschule', 'Deutsches Institut Iran', 'Deutschunterricht Shiraz'],
+      de: ['Über', 'Derakhte Kherad Geschichte', 'Deutsche Sprachschule', 'Deutsches Institut Iran', 'Deutschunterricht Shiraz'],
       fa: ['درباره ما', 'تاریخچه درخت خرد', 'مدرسه زبان آلمانی', 'موسسه آلمانی ایران', 'آموزش آلمانی شیراز']
     }
   }, locale as Locale);
@@ -52,34 +53,13 @@ export default async function AboutPage({
     home: locale === 'de' ? 'Startseite' : 'خانه',
     courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
     blog: locale === 'de' ? 'Blog' : 'وبلاگ',
-    about: locale === 'de' ? 'Über Uns' : 'درباره ما',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
     contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
     consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
   };
   
-  // Define footer data
-  const footer = {
-    about: {
-      title: locale === 'de' ? 'Über Derakhte Kherad' : 'درباره درخت خرد',
-      description: locale === 'de'
-        ? 'Das Institut Derakhte Kherad ist ein führendes Zentrum für das Erlernen der deutschen Sprache.'
-        : 'موسسه درخت خرد، مرکزی پیشرو در آموزش زبان آلمانی.'
-    },
-    quickLinks: {
-      title: locale === 'de' ? 'Schnelllinks' : 'دسترسی سریع',
-      links: [
-        { title: locale === 'de' ? 'Kurse' : 'دوره‌ها', href: `/${locale}/courses` },
-        { title: locale === 'de' ? 'Kontakt' : 'تماس با ما', href: `/${locale}/contact` },
-        { title: locale === 'de' ? 'Beratung' : 'مشاوره', href: `/${locale}/consultation` }
-      ]
-    },
-    contact: {
-      title: locale === 'de' ? 'Kontaktieren Sie uns' : 'تماس با ما',
-      address: locale === 'de' ? 'Berlin, Deutschland' : 'تهران، ایران',
-      email: 'info@derakhtekherad.com',
-      phone: '+49 XXXX XXXXXX'
-    }
-  };
+  // Get footer data using the utility function
+  const footer = getFooterData(locale as Locale, navItems);
   
   // Generate structured data schema
   const organizationSchema = generateOrganizationSchema();
@@ -92,7 +72,7 @@ export default async function AboutPage({
           {/* About page content */}
           <div className="container mx-auto py-10 px-4">
             <h1 className="text-3xl font-bold mb-6 text-center">
-              {locale === 'de' ? 'Über uns' : 'درباره ما'}
+              {locale === 'de' ? 'Über' : 'درباره ما'}
             </h1>
             
             <div className="flex flex-col md:flex-row gap-8 mb-10">

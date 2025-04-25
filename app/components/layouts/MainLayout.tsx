@@ -96,7 +96,7 @@ export default function MainLayout({ children, locale, navItems = {}, footer }: 
   // Navigation translations for Header
   const navigationTranslations = {
     home: navItems?.home || (locale === 'de' ? 'Startseite' : 'صفحه اصلی'),
-    about: navItems?.about || (locale === 'de' ? 'Über Uns' : 'درباره ما'),
+    about: navItems?.about || (locale === 'de' ? 'Über' : 'درباره ما'),
     courses: navItems?.courses || (locale === 'de' ? 'Kurse' : 'دوره‌ها'),
     teachers: locale === 'de' ? 'Lehrer' : 'اساتید',
     blog: navItems?.blog || (locale === 'de' ? 'Blog' : 'وبلاگ'),

@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://derakhtekherad.com'),
   icons: {
     icon: '/favicon.ico',
-    apple: '/logo.png',
+    apple: '/logo-new.png',
   },
   openGraph: {
     title: 'Derakhte Kherad | German Language Institute',
     description: 'Learn German with Derakhte Kherad Language Institute',
-    images: ['/logo.png'],
+    images: ['/logo-new.png'],
     type: 'website',
     url: 'https://derakhtekherad.com',
   },
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Derakhte Kherad | German Language Institute',
     description: 'Learn German with Derakhte Kherad Language Institute',
-    images: ['/logo.png'],
+    images: ['/logo-new.png'],
   },
 };
 

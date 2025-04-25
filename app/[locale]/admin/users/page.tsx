@@ -49,7 +49,7 @@ export default async function AdminUsersPage({
   const translations = {
     navigation: {
       home: locale === 'de' ? 'Startseite' : 'خانه',
-      about: locale === 'de' ? 'Über uns' : 'درباره ما',
+      about: locale === 'de' ? 'Über' : 'درباره ما',
       courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
       teachers: locale === 'de' ? 'Lehrer' : 'اساتید',
       blog: locale === 'de' ? 'Blog' : 'وبلاگ',

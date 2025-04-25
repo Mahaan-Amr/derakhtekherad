@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Locale } from '../../i18n/settings';
 import { useTheme } from '@/app/context/ThemeContext';
 import { useEffect, useState } from 'react';
@@ -49,22 +48,25 @@ export default function Logo({
   // Display the appropriate text based on locale
   const logoText = locale === 'fa' ? 'درخت خرد' : 'Derakhte Kherad';
 
+  // Hard-coded version number for extreme cache-busting
+  // Increment this whenever you update the logo
+  const logoVersion = "v1234567890";
+
   return (
     <Link 
       href={`/${locale}`} 
       className={`font-bold transition-colors duration-200 tracking-tight flex items-center ${textSizeClasses[textSize]} ${variantClasses[variant]} ${className}`}
     >
       <div className={`w-[58px] h-[58px] flex items-center justify-center rounded-full ${bgColorClass} transition-colors duration-300`}>
-        <Image 
+        <img 
           src="/logo.png"
           alt="Derakhte Kherad Logo"
-          width={50}
-          height={50}
+          width={56}
+          height={56}
           className="object-contain"
-          unoptimized
         />
       </div>
-      {showText && <span className="ml-3 md:ml-4">{logoText}</span>}
+      {showText && <span className={locale === 'fa' ? 'mr-5 md:mr-6' : 'ml-3 md:ml-4'}>{logoText}</span>}
     </Link>
   );
 } 

@@ -95,9 +95,31 @@ const Header: React.FC<HeaderProps> = ({
     <header className="bg-white dark:bg-gray-900 shadow-sm relative z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Logo locale={locale} variant={darkMode ? 'light' : 'dark'} />
+          {/* Logo and Mobile Navigation */}
+          <div className="flex items-center">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center">
+              <Logo locale={locale} variant={darkMode ? 'light' : 'dark'} showText={false} className="md:hidden" />
+              <Logo locale={locale} variant={darkMode ? 'light' : 'dark'} className="hidden md:flex" />
+            </div>
+            
+            {/* Mobile-only important links */}
+            <div className="flex md:hidden ml-4 rtl:mr-4 rtl:ml-0">
+              <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                <Link
+                  href={`/${locale}/about`}
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                >
+                  {locale === 'fa' ? 'درباره ما' : 'Über'}
+                </Link>
+                <Link
+                  href={`/${locale}/courses`}
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                >
+                  {locale === 'fa' ? 'دوره‌ها' : 'Kurse'}
+                </Link>
+              </div>
+            </div>
           </div>
           
           {/* Desktop Navigation */}
@@ -144,14 +166,14 @@ const Header: React.FC<HeaderProps> = ({
           
           {/* Header controls: Language switcher, Dark mode toggle, Auth */}
           <div className="hidden md:flex md:items-center space-x-4 rtl:space-x-reverse">
-            {/* Language switcher */}
+            {/* Theme selector */}
             <div className="mr-2">
-              <LangSwitcher locale={locale} />
+              <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
             </div>
 
-            {/* Theme selector */}
+            {/* Language switcher */}
             <div className="mx-2">
-              <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              <LangSwitcher locale={locale} />
             </div>
 
             {user ? (
@@ -184,7 +206,11 @@ const Header: React.FC<HeaderProps> = ({
       {isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navigationItems.map((item) => (
+            {navigationItems
+              .filter(item => 
+                !((item.href === '/about' || item.href === '/courses'))
+              )
+              .map((item) => (
               <Link
                 key={item.href}
                 href={`/${locale}${item.href}`}
@@ -196,17 +222,17 @@ const Header: React.FC<HeaderProps> = ({
             ))}
             
             <div className="flex items-center justify-between px-3 py-2">
+              {/* Theme selector */}
+              <div className="text-gray-500 dark:text-gray-400">
+                <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              </div>
+              
               {/* Language Switcher */}
               <div className="flex items-center">
                 <LangSwitcher locale={locale} />
                 <span className="text-sm ml-2">
                   {locale === 'de' ? languageTranslations.switchToPersian : languageTranslations.switchToGerman}
                 </span>
-              </div>
-              
-              {/* Theme selector */}
-              <div className="text-gray-500 dark:text-gray-400">
-                <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
               </div>
             </div>
             

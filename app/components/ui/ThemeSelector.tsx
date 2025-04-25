@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Locale } from '@/app/i18n/settings';
 import { useTheme } from '@/app/context/ThemeContext';
+import { useTranslation } from 'react-i18next';
+import { cn } from '@/lib/utils';
 
 // Available color themes
 type ColorTheme = 'default' | 'emerald' | 'rose' | 'blue' | 'amber' | 'ocean' | 'forest' | 'olive' | 'sunset' | 'midnight';
@@ -11,14 +13,19 @@ interface ThemeSelectorProps {
   locale: Locale;
   isDarkMode: boolean;
   toggleDarkMode?: () => void;
+  className?: string;
+  isAdminUser?: boolean;
 }
 
-export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: ThemeSelectorProps) {
-  const { isAdminUser } = useTheme();
+export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, className, isAdminUser = false }: ThemeSelectorProps) {
+  const { isAdminUser: themeAdminUser } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ColorTheme>('default');
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLButtonElement>(null);
+  const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const isRtl = locale === 'fa';
+  const { t } = useTranslation();
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0, left: 0 });
 
   // Initialize theme on component mount
   useEffect(() => {
@@ -30,7 +37,7 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
   // Handle theme change
   const changeTheme = (theme: ColorTheme) => {
     // Only allow admin users to change color theme
-    if (!isAdminUser) {
+    if (!themeAdminUser) {
       console.log('Only admin users can change the color theme');
       setIsOpen(false);
       return;
@@ -71,7 +78,8 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if ((dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) &&
+          (dropdownMenuRef.current && !dropdownMenuRef.current.contains(event.target as Node))) {
         setIsOpen(false);
       }
     }
@@ -149,21 +157,25 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
   ];
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative">
       <button
-        className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary bg-gray-100 dark:bg-gray-800 transition-all hover:scale-110"
+        ref={dropdownRef}
+        className={cn(
+          "flex h-10 w-10 items-center justify-center rounded-md border border-input bg-background",
+          className
+        )}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={locale === 'de' ? 'Thema und Modus ändern' : 'تغییر تم و حالت'}
       >
         <div className="flex items-center">
-          {isAdminUser && (
+          {themeAdminUser && (
             <div 
               className={`w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 ${
                 colorThemes.find(t => t.id === currentTheme)?.bgClass || 'bg-gray-500'
               }`}
             />
           )}
-          {!isAdminUser && (
+          {!themeAdminUser && (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               {isDarkMode ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -177,10 +189,18 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode }: Th
 
       {isOpen && (
         <div 
-          className={`absolute z-50 ${isRtl ? 'right-0' : 'left-0'} mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none ${isAdminUser ? 'divide-y divide-gray-100 dark:divide-gray-700' : ''}`}
+          ref={dropdownMenuRef}
+          className={`absolute z-50 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none ${themeAdminUser ? 'divide-y divide-gray-100 dark:divide-gray-700' : ''}`}
+          style={{
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            top: '100%',
+            [isRtl ? 'right' : 'left']: 0,
+            marginTop: '8px'
+          }}
         >
           {/* Color theme selection - only show for admin users */}
-          {isAdminUser && (
+          {themeAdminUser && (
             <div>
               <p className="px-2 py-2 text-sm font-medium text-gray-600 dark:text-gray-300">
                 {locale === 'de' ? 'Farbthema (Admin)' : 'رنگ تم (فقط برای مدیران)'}

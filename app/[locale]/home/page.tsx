@@ -18,6 +18,7 @@ import type { BlogPost } from '@/app/lib/blog';
 import { Course } from '@/app/types/course';
 import { generateSeoMetadata, generateOrganizationSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
+import { getFooterData } from '@/app/lib/footer';
 
 // Generate SEO metadata for home page
 export async function generateMetadata({
@@ -30,7 +31,7 @@ export async function generateMetadata({
   return generateSeoMetadata({
     title: {
       de: 'Startseite',
-      fa: 'آکادمی تخصصی زبان آلمانی درخت خرد'
+      fa: 'آکادمی زبان آلمانی درخت خرد'
     },
     description: {
       de: 'Derakhte Kherad ist ein führendes Institut für das Erlernen der deutschen Sprache in Shiraz, Iran. Wir bieten hochwertige Sprachkurse für alle Niveaus an.',
@@ -58,28 +59,23 @@ export default async function HomePage({
   // Access locale asynchronously
   const { locale } = await params;
   
-  // Navigation translations
+  // Define navigation translations
   const nav = {
-      home: locale === 'de' ? 'Startseite' : 'خانه',
-      about: locale === 'de' ? 'Über uns' : 'درباره ما',
-    courses: locale === 'de' ? 'Kurse' : 'دوره ها',
-    blog: locale === 'de' ? 'Blog' : 'بلاگ',
-      contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
+    home: locale === 'de' ? 'Startseite' : 'خانه',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
+    courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
+    blog: locale === 'de' ? 'Blog' : 'وبلاگ',
+    contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
     consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
-      login: locale === 'de' ? 'Anmelden' : 'ورود',
+    login: locale === 'de' ? 'Anmelden' : 'ورود',
     signup: locale === 'de' ? 'Registrieren' : 'ثبت نام',
   };
   
-  // Footer translations
+  // Get footer translations (for address, phone, etc.)
   const footer = {
-    address: locale === 'de' 
-      ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' 
-      : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
-    phone: locale === 'de' 
-      ? 'Festnetz: 071-36386652 | Mobil: 0936-0217684' 
-      : 'تلفن ثابت: ۰۷۱۳۶۳۸۶۶۵۲ | موبایل: ۰۹۳۶۰۲۱۷۶۸۴',
+    address: locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
     email: 'info@derakhtekherad.com',
-    rights: locale === 'de' ? 'Alle Rechte vorbehalten' : 'تمامی حقوق محفوظ است',
+    phone: locale === 'de' ? 'Festnetz: 071-36386652 | Mobil: 0936-0217684' : 'تلفن ثابت: ۰۷۱۳۶۳۸۶۶۵۲ | موبایل: ۰۹۳۶۰۲۱۷۶۸۴'
   };
   
   // Fetch hero slides
@@ -228,30 +224,7 @@ export default async function HomePage({
       <MainLayout 
         locale={locale as Locale}
         navItems={nav}
-        footer={{
-          about: {
-            title: locale === 'de' ? 'Über uns' : 'درباره ما',
-            description: locale === 'de' 
-              ? 'Derakhte Kherad ist ein Institut für persische Sprache und Kultur mit Sitz in Shiraz, Iran.' 
-              : 'درخت خرد یک موسسه آموزش زبان و فرهنگ فارسی در شیراز، ایران است.'
-          },
-          quickLinks: {
-            title: locale === 'de' ? 'Schnelllinks' : 'لینک‌های سریع',
-            links: [
-              { title: nav.home, href: `/${locale}` },
-              { title: nav.about, href: `/${locale}/about` },
-              { title: nav.courses, href: `/${locale}/courses` },
-              { title: nav.blog, href: `/${locale}/blog` },
-              { title: nav.contact, href: `/${locale}/contact` }
-            ]
-          },
-          contact: {
-            title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-            address: footer.address,
-            email: footer.email,
-            phone: footer.phone
-          }
-        }}
+        footer={getFooterData(locale as Locale, nav)}
       >
         {/* 1. Hero section */}
         <HeroSlider locale={locale as Locale} initialSlides={heroSlides} autoplay={false} />

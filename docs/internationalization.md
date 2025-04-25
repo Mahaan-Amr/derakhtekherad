@@ -133,7 +133,7 @@ The application uses two approaches for translations:
 1. **Inline translations** for simple components:
 
 ```tsx
-{locale === 'de' ? 'Über uns' : 'درباره ما'}
+{locale === 'de' ? 'Über' : 'درباره ما'}
 ```
 
 2. **Translation objects** passed to components:
@@ -142,7 +142,7 @@ The application uses two approaches for translations:
 const translations = {
   navigation: {
     home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
     // Other translations...
   }
 };

@@ -33,7 +33,7 @@ function ResetPasswordClient({
   // Define nav items for layout
   const navItems = {
     home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
     courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
     blog: locale === 'de' ? 'Blog' : 'وبلاگ',
     contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
@@ -43,7 +43,7 @@ function ResetPasswordClient({
   // Define footer props
   const footer = {
     about: {
-      title: locale === 'de' ? 'Über uns' : 'درباره ما',
+      title: locale === 'de' ? 'Über' : 'درباره ما',
       description: locale === 'de' 
         ? 'Derakhte Kherad ist ein Sprachinstitut, das sich auf das Unterrichten von Persisch und Deutsch spezialisiert hat.'
         : 'درخت خرد موسسه آموزش زبان است که در زمینه آموزش زبان‌های فارسی و آلمانی تخصص دارد.'

@@ -14,7 +14,7 @@ export default async function RootPage({
   // Navigation translations
   const nav = {
     home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
     courses: locale === 'de' ? 'Kurse' : 'دوره ها',
     blog: locale === 'de' ? 'Blog' : 'بلاگ',
     contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',

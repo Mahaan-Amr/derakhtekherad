@@ -6,6 +6,7 @@ import { Locale } from '@/app/i18n/settings';
 import MainLayout from '@/app/components/layouts/MainLayout';
 import { generateSeoMetadata, generateBreadcrumbSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
+import { getFooterData } from '@/app/lib/footer';
 
 export const dynamic = 'force-dynamic';
 
@@ -177,42 +178,18 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
     prevPage: locale === 'de' ? 'Zurück' : 'قبلی'
   };
   
-  // Navigation translations
+  // Define navigation translations
   const nav = {
     home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
-    courses: locale === 'de' ? 'Kurse' : 'دوره ها',
-    blog: locale === 'de' ? 'Blog' : 'بلاگ',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
+    courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
+    blog: locale === 'de' ? 'Blog' : 'وبلاگ',
     contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
     consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
-    login: locale === 'de' ? 'Anmelden' : 'ورود',
-    signup: locale === 'de' ? 'Registrieren' : 'ثبت نام',
   };
   
-  // Define footer for the MainLayout
-  const footer = {
-    about: {
-      title: locale === 'de' ? 'Über uns' : 'درباره ما',
-      description: locale === 'de' 
-        ? 'Derakhte Kherad Sprachschule bietet hochwertigen Deutschunterricht und Unterstützung bei der Einwanderung nach Deutschland.' 
-        : 'آموزشگاه زبان درخت خرد ارائه دهنده آموزش زبان آلمانی با کیفیت و پشتیبانی برای مهاجرت به آلمان است.'
-    },
-    quickLinks: {
-      title: locale === 'de' ? 'Schnelllinks' : 'لینک‌های سریع',
-      links: [
-        { title: locale === 'de' ? 'Startseite' : 'خانه', href: `/${locale}` },
-        { title: locale === 'de' ? 'Kurse' : 'دوره‌ها', href: `/${locale}/courses` },
-        { title: locale === 'de' ? 'Blog' : 'وبلاگ', href: `/${locale}/blog` },
-        { title: locale === 'de' ? 'Kontakt' : 'تماس با ما', href: `/${locale}/contact` }
-      ]
-    },
-    contact: {
-      title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      address: locale === 'de' ? 'Musterstraße 123, 12345 Berlin, Deutschland' : 'خیابان نمونه، پلاک ۱۲۳، تهران، ایران',
-      email: 'info@derakhtekherad.com',
-      phone: '+49 123 456789'
-    }
-  };
+  // Get footer data using the utility function
+  const footer = getFooterData(locale as Locale, nav);
   
   // Render posts
   const renderPosts = () => {

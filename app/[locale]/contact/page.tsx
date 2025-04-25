@@ -8,6 +8,7 @@ import { generateSeoMetadata, generateBreadcrumbSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { getFooterData } from '@/app/lib/footer';
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>
@@ -37,63 +38,22 @@ export default async function ContactPage({ params }: ContactPageProps) {
   // Access locale asynchronously
   const { locale } = await params;
   
-  // Define basic translations
+  // Define navigation translations
   const translations = {
     navigation: {
       home: locale === 'de' ? 'Startseite' : 'خانه',
-      about: locale === 'de' ? 'Über uns' : 'درباره ما',
+      about: locale === 'de' ? 'Über' : 'درباره ما',
       courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
-      teachers: locale === 'de' ? 'Lehrer' : 'اساتید',
       blog: locale === 'de' ? 'Blog' : 'وبلاگ',
       contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      login: locale === 'de' ? 'Anmelden' : 'ورود',
-      darkMode: locale === 'de' ? 'Dunkelmodus' : 'حالت تاریک',
-      lightMode: locale === 'de' ? 'Hellmodus' : 'حالت روشن'
-    },
-    footer: {
-      address: locale === 'de' ? 'Adresse' : 'آدرس',
-      phone: locale === 'de' ? 'Telefon' : 'تلفن',
-      email: locale === 'de' ? 'E-Mail' : 'ایمیل',
-      rights: locale === 'de' ? 'Alle Rechte vorbehalten' : 'تمامی حقوق محفوظ است'
-    }
-  };
-  
-  // Navigation translations
-  const nav = {
-    home: locale === 'de' ? 'Startseite' : 'خانه',
-    about: locale === 'de' ? 'Über uns' : 'درباره ما',
-    courses: locale === 'de' ? 'Kurse' : 'دوره ها',
-    blog: locale === 'de' ? 'Blog' : 'بلاگ',
-    contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-    consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
-    login: locale === 'de' ? 'Anmelden' : 'ورود',
-    signup: locale === 'de' ? 'Registrieren' : 'ثبت نام',
-  };
-  
-  // Define footer for the MainLayout
-  const footer = {
-    about: {
-      title: locale === 'de' ? 'Über uns' : 'درباره ما',
-      description: locale === 'de' 
-        ? 'Derakhte Kherad Sprachschule bietet hochwertigen Deutschunterricht und Unterstützung bei der Einwanderung nach Deutschland.' 
-        : 'آموزشگاه زبان درخت خرد ارائه دهنده آموزش زبان آلمانی با کیفیت و پشتیبانی برای مهاجرت به آلمان است.'
-    },
-    quickLinks: {
-      title: locale === 'de' ? 'Schnelllinks' : 'لینک‌های سریع',
-      links: [
-        { title: translations.navigation.home, href: `/${locale}` },
-        { title: translations.navigation.courses, href: `/${locale}/courses` },
-        { title: translations.navigation.blog, href: `/${locale}/blog` },
-        { title: translations.navigation.contact, href: `/${locale}/contact` }
-      ]
     },
     contact: {
-      title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      address: locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
-      email: 'info@derakhtekherad.com',
-      phone: locale === 'de' ? 'Festnetz: 071-36386652 | Mobil: 0936-0217684' : 'تلفن ثابت: ۰۷۱۳۶۳۸۶۶۵۲ | موبایل: ۰۹۳۶۰۲۱۷۶۸۴'
+      // existing translations...
     }
   };
+  
+  // Get footer data using the utility function
+  const footer = getFooterData(locale as Locale, translations.navigation);
   
   // Determine RTL direction based on locale
   const isRtl = locale === 'fa';
@@ -159,7 +119,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
     <>
       <JsonLd data={localBusinessSchema} />
       <JsonLd data={breadcrumbSchema} />
-      <MainLayout locale={locale as Locale} navItems={nav} footer={footer}>
+      <MainLayout locale={locale as Locale} navItems={translations.navigation} footer={footer}>
         <div className={`bg-white dark:bg-gray-900 py-12 sm:py-16 ${isRtl ? 'rtl' : 'ltr'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:text-center mb-12">

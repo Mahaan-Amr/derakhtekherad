@@ -1,40 +1,40 @@
 import { Locale } from '@/app/i18n/settings';
 import { Metadata } from 'next';
 import MainLayout from '@/app/components/layouts/MainLayout';
-import ConsultationForm from '@/app/components/consultation/ConsultationForm';
+import dynamic from 'next/dynamic';
 import { generateSeoMetadata, generateBreadcrumbSchema } from '@/app/lib/seo';
 import JsonLd from '@/app/components/seo/JsonLd';
 import { Suspense } from 'react';
+import { getFooterData } from '@/app/lib/footer';
+
+// Dynamically load the ConsultationForm component (client component)
+const ConsultationForm = dynamic(() => import('@/app/components/consultation/ConsultationForm'), {
+  ssr: false,
+  loading: () => <div className="h-96 flex items-center justify-center">
+    <div className="w-8 h-8 border-t-2 border-b-2 border-primary rounded-full animate-spin"></div>
+  </div>
+});
 
 export async function generateMetadata({ 
   params 
 }: { 
   params: { locale: Locale } 
 }): Promise<Metadata> {
-  const { locale } = params;
+  const locale = params.locale;
   
-  return generateSeoMetadata({
-    title: {
-      de: 'Persönliche Beratung',
-      fa: 'مشاوره تخصصی'
-    },
-    description: {
-      de: 'Buchen Sie ein persönliches Beratungsgespräch mit unseren Experten für deutsche Sprachkurse. Wir helfen Ihnen, den richtigen Kurs zu finden.',
-      fa: 'با کارشناسان ما یک جلسه مشاوره تخصصی رزرو کنید. ما به شما کمک می‌کنیم تا دوره مناسب خود را پیدا کنید.'
-    },
-    path: 'consultation',
-    image: {
-      url: '/images/consultation-hero.jpg',
-      alt: {
-        de: 'Professionelle Beratung bei Derakhte Kherad',
-        fa: 'مشاوره تخصصی در درخت خرد'
+  return {
+    title: locale === 'de' ? 'Persönliche Beratung | Derakhte Kherad' : 'مشاوره تخصصی | درخت خرد',
+    description: locale === 'de' 
+      ? 'Buchen Sie eine persönliche Beratung mit unseren Sprachexperten, um den idealen Deutschkurs für Ihre Bedürfnisse zu finden'
+      : 'یک جلسه مشاوره تخصصی با کارشناسان زبان ما رزرو کنید تا دوره مناسب با نیازهای خود را پیدا کنید',
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/consultation`,
+      languages: {
+        'de': `${process.env.NEXT_PUBLIC_APP_URL}/de/consultation`,
+        'fa': `${process.env.NEXT_PUBLIC_APP_URL}/fa/consultation`
       }
-    },
-    keywords: {
-      de: ['Sprachberatung', 'Deutschkurse', 'Persönliche Beratung', 'Lerntipps', 'Kursauswahl'],
-      fa: ['مشاوره زبان', 'دوره‌های زبان آلمانی', 'مشاوره تخصصی', 'راهنمای یادگیری', 'انتخاب دوره']
     }
-  }, locale);
+  };
 }
 
 export default function ConsultationPage({
@@ -42,49 +42,30 @@ export default function ConsultationPage({
 }: {
   params: { locale: Locale };
 }) {
-  const { locale } = params;
+  const locale = params.locale;
   const isRtl = locale === 'fa';
+  
+  // Navigation items
+  const navItems = {
+    home: locale === 'de' ? 'Startseite' : 'صفحه اصلی',
+    about: locale === 'de' ? 'Über' : 'درباره ما',
+    courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
+    blog: locale === 'de' ? 'Blog' : 'وبلاگ',
+    contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
+    consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
+    login: locale === 'de' ? 'Anmelden' : 'ورود',
+    signup: locale === 'de' ? 'Registrieren' : 'ثبت نام'
+  };
+  
+  // Get footer data using the utility function
+  const footerData = getFooterData(locale, navItems);
 
+  // Consultation specific translations
   const translations = {
-    navItems: {
-      home: locale === 'de' ? 'Startseite' : 'صفحه اصلی',
-      about: locale === 'de' ? 'Über Uns' : 'درباره ما',
-      courses: locale === 'de' ? 'Kurse' : 'دوره‌ها',
-      blog: locale === 'de' ? 'Blog' : 'وبلاگ',
-      contact: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      consultation: locale === 'de' ? 'Beratung' : 'مشاوره',
-      login: locale === 'de' ? 'Anmelden' : 'ورود',
-      signup: locale === 'de' ? 'Registrieren' : 'ثبت نام'
-    },
-    footer: {
-      about: {
-        title: locale === 'de' ? 'Über Derakhte Kherad' : 'درباره درخت خرد',
-        description: locale === 'de'
-          ? 'Das Institut Derakhte Kherad ist ein führendes Zentrum für das Erlernen der deutschen Sprache.'
-          : 'موسسه درخت خرد، مرکزی پیشرو در آموزش زبان آلمانی.'
-      },
-      quickLinks: {
-        title: locale === 'de' ? 'Schnelllinks' : 'دسترسی سریع',
-        links: [
-          {
-            title: locale === 'de' ? 'Kurse' : 'دوره‌ها',
-            href: `/${locale}/courses`
-          },
-          {
-            title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-            href: `/${locale}/contact`
-          }
-        ]
-      },
-      contact: {
-        title: locale === 'de' ? 'Kontaktieren Sie uns' : 'تماس با ما',
-        address: locale === 'de'
-          ? 'Berlin, Deutschland'
-          : 'تهران، ایران',
-        email: 'info@derakhtekherad.com',
-        phone: '+49 XXXX XXXXXX'
-      }
-    },
+    // Navigation items
+    navItems,
+    // Footer data included from utility function
+    footer: footerData,
     consult: {
       title: locale === 'de' ? 'Persönliche Beratung' : 'مشاوره تخصصی',
       subtitle: locale === 'de' 
