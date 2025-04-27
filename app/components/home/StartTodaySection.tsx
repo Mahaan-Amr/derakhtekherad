@@ -25,7 +25,7 @@ export default function StartTodaySection({ locale }: StartTodaySectionProps) {
         <h2 className={`text-4xl font-bold mb-4 ${isRtl ? 'rtl' : 'ltr'}`}>{translations.title}</h2>
         <p className={`text-xl mb-8 ${isRtl ? 'rtl' : 'ltr'}`}>{translations.subtitle}</p>
         <Link href={`/${locale}/consultation`} passHref>
-          <Button variant="default" size="lg" className="bg-white text-primary hover:bg-gray-100 dark:bg-gray-100">
+          <Button variant="default" size="lg" className="bg-white text-primary hover:bg-gray-100 hover:text-primary-dark dark:bg-gray-100 dark:hover:bg-gray-200">
             {translations.button}
           </Button>
         </Link>

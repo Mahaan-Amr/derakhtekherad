@@ -99,7 +99,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ locale }) => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className="flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-md hover:bg-primary-light/15 dark:hover:bg-primary-dark/20 transition-colors"
         aria-expanded={isDropdownOpen}
         aria-haspopup="true"
       >

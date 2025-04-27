@@ -68,7 +68,7 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
             className={`flex-1 flex flex-col items-center justify-center h-full transition-all duration-300 ${
               locale === 'fa' 
                 ? 'bg-primary/20 dark:bg-primary/30' 
-                : 'bg-transparent hover:bg-gray-300/30 dark:hover:bg-gray-600/30'
+                : 'bg-transparent hover:bg-primary-light/15 dark:hover:bg-primary-dark/20'
             }`}
           >
             <div className={`flex flex-col items-center ${locale === 'fa' ? 'scale-110' : ''}`}>
@@ -95,11 +95,11 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
           </div>
           
           {/* German (DE) side - Right */}
-          <div 
+          <div
             className={`flex-1 flex flex-col items-center justify-center h-full transition-all duration-300 ${
               locale === 'de' 
                 ? 'bg-primary/20 dark:bg-primary/30' 
-                : 'bg-transparent hover:bg-gray-300/30 dark:hover:bg-gray-600/30'
+                : 'bg-transparent hover:bg-primary-light/15 dark:hover:bg-primary-dark/20'
             }`}
           >
             <div className={`flex flex-col items-center ${locale === 'de' ? 'scale-110' : ''}`}>

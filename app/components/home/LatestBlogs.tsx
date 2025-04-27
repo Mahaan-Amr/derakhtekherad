@@ -104,7 +104,7 @@ export default function LatestBlogs({ locale, posts = [] }: LatestBlogsProps) {
           <Link href={`/${locale}/blog`} passHref>
             <Button 
               variant="outline" 
-              className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-white dark:border-gray-700 hover:border-primary dark:hover:border-primary"
+              className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-primary-light/10 dark:hover:bg-primary-dark/20 hover:text-primary-dark dark:hover:text-primary-light border-white dark:border-gray-700 hover:border-primary dark:hover:border-primary"
             >
               {translations.viewAll}
               <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${isRtl ? 'mr-1 rotate-180' : 'ml-1'}`} viewBox="0 0 20 20" fill="currentColor">

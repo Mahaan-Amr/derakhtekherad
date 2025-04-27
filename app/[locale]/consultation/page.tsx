@@ -272,7 +272,7 @@ export default function ConsultationPage({
               >
                 <a 
                   href="#consultation-form" 
-                  className="inline-block bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="inline-block bg-white text-primary hover:bg-primary-light hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   {locale === 'de' ? 'Jetzt anmelden' : 'همین حالا ثبت‌نام کنید'}
                 </a>

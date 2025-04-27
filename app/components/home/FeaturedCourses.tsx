@@ -88,7 +88,7 @@ export default function FeaturedCourses({ locale, courses = [] }: FeaturedCourse
         
         <div className="mt-12 text-center">
           <Link href={`/${locale}/courses`} passHref>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="hover:bg-primary-light/10 hover:text-primary-dark dark:hover:text-primary-light">
               {locale === 'de' ? 'Alle Kurse anzeigen' : 'مشاهده همه دوره‌ها'}
             </Button>
           </Link>

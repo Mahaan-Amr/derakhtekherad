@@ -22,7 +22,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     };
 
     const hoverStyles = isHoverable 
-      ? "transition-all duration-300 hover:shadow-md hover:-translate-y-1" 
+      ? "transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-primary-light/50 dark:hover:border-primary-dark/50" 
       : "";
 
     return (

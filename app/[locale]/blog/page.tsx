@@ -260,7 +260,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                   href={`/${locale}/blog`}
                   className={`px-4 py-2 rounded-full ${
                     !categorySlug 
-                      ? 'bg-primary text-white font-bold shadow-md hover:bg-primary-dark'
+                      ? 'bg-primary text-white !text-white font-bold shadow-md hover:bg-primary-dark hover:!text-white'
                       : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -272,7 +272,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                     href={`/${locale}/blog?category=${category.slug}`}
                     className={`px-4 py-2 rounded-full ${
                       categorySlug === category.slug 
-                        ? 'bg-primary text-white font-bold shadow-md hover:bg-primary-dark' 
+                        ? 'bg-primary text-white !text-white font-bold shadow-md hover:bg-primary-dark hover:!text-white' 
                         : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                     }`}
                   >
@@ -289,25 +289,47 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
           {/* Pagination */}
           {filteredPosts.length > 0 && (
             <div className="flex justify-center mt-12">
-              {currentPage > 1 && (
+              <nav className="flex items-center gap-1">
+                {currentPage > 1 && (
+                  <Link
+                    href={`/${locale}/blog?page=${currentPage - 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
+                    className="px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
+                  >
+                    {isRtl ? null : (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {isRtl ? blogTranslations.nextPage : blogTranslations.prevPage}
+                    {isRtl && (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </Link>
+                )}
+                
+                <span className="px-4 py-2 bg-primary text-white font-bold rounded-md shadow-sm">
+                  {currentPage}
+                </span>
+                
                 <Link
-                  href={`/${locale}/blog?page=${currentPage - 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
-                  className="px-4 py-2 bg-gray-200 rounded-l-md hover:bg-gray-300"
+                  href={`/${locale}/blog?page=${currentPage + 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
+                  className="px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
                 >
-                  {isRtl ? blogTranslations.nextPage : blogTranslations.prevPage}
+                  {isRtl ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  ) : null}
+                  {isRtl ? blogTranslations.prevPage : blogTranslations.nextPage}
+                  {!isRtl && (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
                 </Link>
-              )}
-              
-              <span className="px-4 py-2 bg-primary text-white">
-                {currentPage}
-              </span>
-              
-              <Link
-                href={`/${locale}/blog?page=${currentPage + 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
-                className="px-4 py-2 bg-gray-200 rounded-r-md hover:bg-gray-300"
-              >
-                {isRtl ? blogTranslations.prevPage : blogTranslations.nextPage}
-              </Link>
+              </nav>
             </div>
           )}
         </main>

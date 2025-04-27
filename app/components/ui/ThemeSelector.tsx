@@ -213,7 +213,7 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, clas
                     className={`flex items-center px-2 py-2 text-sm rounded-md ${
                       currentTheme === theme.id 
                         ? 'bg-gray-100 dark:bg-gray-700' 
-                        : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                        : 'hover:bg-primary-light/15 dark:hover:bg-primary-dark/20'
                     }`}
                   >
                     <div 
@@ -246,7 +246,7 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, clas
           <div className="p-2">
             <button
               onClick={handleDarkModeToggle}
-              className="w-full flex items-center px-2 py-2 text-sm rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+              className="w-full flex items-center px-2 py-2 text-sm rounded-md text-gray-700 dark:text-gray-200 hover:bg-primary-light/15 dark:hover:bg-primary-dark/20"
             >
               {isDarkMode ? (
                 <>
