@@ -110,14 +110,18 @@ export async function POST(request: Request) {
     const filePath = path.join(publicUploadDir, filename);
     await fs.writeFile(filePath, buffer);
 
-    // Format URL for frontend use
-    const fileUrl = `/uploads/courses/${filename}`;
+    // Format URL for frontend use with cache busting
+    const fileUrl = `/uploads/courses/${filename}?v=${Date.now()}`;
 
     console.log(`[Upload] Course thumbnail saved successfully: ${fileUrl}`);
 
     return NextResponse.json({ 
       url: fileUrl,
       success: true 
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0'
+      }
     });
   } catch (error: any) {
     console.error('Error uploading course thumbnail:', error);

@@ -180,10 +180,10 @@ export default function TeacherEditor({
       
       const data = await response.json();
       
-      // Update form data with the new image URL
+      // Update form data with the new image URL and add cache busting
       setFormData((prev) => ({
         ...prev,
-        photo: data.url
+        photo: `${data.url}&_t=${Date.now()}`
       }));
       
       // Clear any existing error for photo

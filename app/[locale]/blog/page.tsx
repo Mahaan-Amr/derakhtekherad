@@ -290,45 +290,45 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
           {filteredPosts.length > 0 && (
             <div className="flex justify-center mt-12">
               <nav className="flex items-center gap-1">
-                {currentPage > 1 && (
-                  <Link
-                    href={`/${locale}/blog?page=${currentPage - 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
+              {currentPage > 1 && (
+                <Link
+                  href={`/${locale}/blog?page=${currentPage - 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
                     className="px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
-                  >
+                >
                     {isRtl ? null : (
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     )}
-                    {isRtl ? blogTranslations.nextPage : blogTranslations.prevPage}
+                  {isRtl ? blogTranslations.nextPage : blogTranslations.prevPage}
                     {isRtl && (
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                       </svg>
                     )}
-                  </Link>
-                )}
-                
+                </Link>
+              )}
+              
                 <span className="px-4 py-2 bg-primary text-white font-bold rounded-md shadow-sm">
-                  {currentPage}
-                </span>
-                
-                <Link
-                  href={`/${locale}/blog?page=${currentPage + 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
+                {currentPage}
+              </span>
+              
+              <Link
+                href={`/${locale}/blog?page=${currentPage + 1}${categorySlug ? `&category=${categorySlug}` : ''}`}
                   className="px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
-                >
+              >
                   {isRtl ? (
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   ) : null}
-                  {isRtl ? blogTranslations.prevPage : blogTranslations.nextPage}
+                {isRtl ? blogTranslations.prevPage : blogTranslations.nextPage}
                   {!isRtl && (
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                     </svg>
                   )}
-                </Link>
+              </Link>
               </nav>
             </div>
           )}

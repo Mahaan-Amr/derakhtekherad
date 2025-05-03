@@ -260,14 +260,15 @@ export default function HeroSlideForm({
       
       const data = await response.json();
       
-      // Update form data with the new image URL
+      // Update form data with the new image URL and add cache busting
+      const cachedUrl = `${data.url}&_t=${Date.now()}`;
       setFormData((prev) => ({
         ...prev,
-        imageUrl: data.url
+        imageUrl: cachedUrl
       }));
       
-      // Update image preview
-      setImagePreview(data.url);
+      // Update image preview with cache-busting URL
+      setImagePreview(cachedUrl);
       
       // Clear any existing error for imageUrl
       if (errors.imageUrl) {

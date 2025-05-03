@@ -293,7 +293,11 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
         return null;
       }
       
-      return data.url;
+      // Add additional cache-busting parameter to ensure fresh image loading
+      const cachedUrl = `${data.url}&_t=${Date.now()}`;
+      console.log('Cache-busted URL:', cachedUrl);
+      
+      return cachedUrl;
     } catch (error) {
       console.error('Error uploading thumbnail:', error);
       toast.error(

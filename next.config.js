@@ -16,9 +16,10 @@ const nextConfig = {
       },
     ],
     // Add proper configuration for locally uploaded images with detailed comments
-    domains: ['localhost'], // Legacy config for development - prefer remotePatterns for production
+    domains: ['localhost', 'derakhtekherad.com'], // Add production domain
     unoptimized: true, // Disable Next.js image optimization to fix path resolution issues
     dangerouslyAllowSVG: true, // Allow SVG for placeholder images
+    minimumCacheTTL: 0, // Disable image caching to ensure fresh images are loaded
   },
   // Add logging for image optimization to debug any issues
   onDemandEntries: {
@@ -36,6 +37,28 @@ const nextConfig = {
       {
         source: '/uploads/:path*',
         destination: '/uploads/:path*',
+      },
+    ];
+  },
+  // Disable response cache for API routes
+  experimental: {
+    serverComponentsExternalPackages: ["sharp"],
+  },
+  // Add explicit headers for static assets
+  async headers() {
+    return [
+      {
+        source: '/uploads/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+        ],
       },
     ];
   },
