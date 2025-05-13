@@ -115,7 +115,7 @@ export default async function ResetPasswordPage({
 // This wrapper handles the search params
 function ResetPasswordClientWrapper({ locale }: { locale: Locale }) {
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const token = searchParams?.get('token') || null;
   
   return <ResetPasswordClient locale={locale} token={token} />;
 } 

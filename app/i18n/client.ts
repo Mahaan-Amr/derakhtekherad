@@ -29,6 +29,7 @@ i18next
     resourcesToBackend(
       (language: string, namespace: string) =>
         import(`./locales/${language}/${namespace}.json`)
+          .catch(() => ({}))
     )
   )
   .init({
@@ -37,7 +38,10 @@ i18next
     detection: {
       order: ['htmlTag', 'cookie', 'navigator'],
     },
-    preload: runsOnServerSide ? locales : []
+    preload: runsOnServerSide ? locales : [],
+    interpolation: {
+      escapeValue: false,
+    },
   });
 
 // Export the translation hook that correctly handles client/server
@@ -47,14 +51,20 @@ export function useTranslation(ns: string, options: { keyPrefix?: string } = {})
   
   useEffect(() => {
     if (runsOnServerSide) return;
-    if (ret.i18n.resolvedLanguage === defaultLocale) return;
     if (!initialized) {
-      ret.i18n.changeLanguage(ret.i18n.resolvedLanguage);
-      setInitialized(true);
+      if (ret.i18n.isInitialized) {
+        setInitialized(true);
+      } else {
+        // Ensure i18next is initialized
+        i18next.init(getClientOptions(ret.i18n.resolvedLanguage || defaultLocale))
+          .then(() => {
+            setInitialized(true);
+          });
+      }
     }
   }, [ret.i18n, initialized]);
 
-  if (!initialized && !runsOnServerSide && ret.i18n.resolvedLanguage !== defaultLocale) {
+  if (!initialized && !runsOnServerSide) {
     return {
       ...ret,
       t: (key: string) => key,

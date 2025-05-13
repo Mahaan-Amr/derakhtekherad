@@ -8,7 +8,7 @@ export default function LangSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   
   // Remove the current locale from the pathname
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, '');
+  const pathnameWithoutLocale = pathname?.replace(`/${locale}`, '') || '';
   
   return (
     <div className="flex justify-end p-2" style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.5rem' }}>

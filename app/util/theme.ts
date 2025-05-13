@@ -1,8 +1,15 @@
 // Check dark mode preference from cookies or system preference
 export function isDarkMode(): boolean {
   // When running on the server, we can't access window/document
-  // In a full implementation, we would check cookies here
-  return false;
+  if (typeof window === 'undefined') return false;
+  
+  // Check for localStorage first
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') return true;
+  if (savedTheme === 'light') return false;
+  
+  // If no localStorage setting, check system preference
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 // Toggle function for use in client components
@@ -25,15 +32,19 @@ export function toggleDarkMode(): void {
 export function initializeDarkMode(): void {
   if (typeof window === 'undefined') return;
   
-  const savedTheme = localStorage.getItem('theme');
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (
-    savedTheme === 'dark' || 
-    (!savedTheme && systemPrefersDark)
-  ) {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
+  // This adds a small delay to avoid hydration mismatch
+  // Will run after initial render to ensure consistent state
+  setTimeout(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (
+      savedTheme === 'dark' || 
+      (!savedTheme && systemPrefersDark)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, 0);
 } 

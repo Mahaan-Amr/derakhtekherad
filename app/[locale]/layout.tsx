@@ -33,13 +33,13 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     metadataBase: new URL('https://derakhtekherad.com'),
     icons: {
       icon: '/favicon.ico',
-      apple: '/logo-new.png',
+      apple: '/site-logo/logo.svg',
     },
     openGraph: {
       title,
       description,
       images: [{
-        url: '/logo-new.png',
+        url: '/site-logo/logo.svg',
         width: 800,
         height: 800
       }],
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       card: 'summary_large_image',
       title,
       description,
-      images: ['/logo-new.png'],
+      images: ['/site-logo/logo.svg'],
     },
   };
 }

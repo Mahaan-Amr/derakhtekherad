@@ -24,7 +24,7 @@ export default function FloatingContactButton({ locale, translations }: Floating
   };
 
   // Don't show on contact page
-  if (pathname.includes('/contact')) {
+  if (pathname?.includes('/contact')) {
     return null;
   }
 

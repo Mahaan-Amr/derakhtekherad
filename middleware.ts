@@ -40,6 +40,7 @@ const EXCLUDED_PATHS = [
   '/favicon.ico',
   '/robots.txt',
   '/sitemap.xml',
+  '/site-logo',
   // API routes
   '/api/',
   // Other paths to exclude

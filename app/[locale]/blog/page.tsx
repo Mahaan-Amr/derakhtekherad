@@ -238,7 +238,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
       name: 'Derakhte Kherad',
       logo: {
         '@type': 'ImageObject',
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/images/logo.png`
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/site-logo/new-logo.svg`
       }
     }
   };

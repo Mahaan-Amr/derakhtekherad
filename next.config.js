@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -16,8 +17,8 @@ const nextConfig = {
       },
     ],
     // Add proper configuration for locally uploaded images with detailed comments
-    domains: ['localhost', 'derakhtekherad.com'], // Add production domain
-    unoptimized: true, // Disable Next.js image optimization to fix path resolution issues
+    domains: ['derakhtekherad.com', 'localhost'],
+    unoptimized: true,
     dangerouslyAllowSVG: true, // Allow SVG for placeholder images
     minimumCacheTTL: 0, // Disable image caching to ensure fresh images are loaded
   },
@@ -42,7 +43,7 @@ const nextConfig = {
   },
   // Disable response cache for API routes
   experimental: {
-    serverComponentsExternalPackages: ["sharp"],
+    serverComponentsExternalPackages: ['bcrypt', 'prisma', '@prisma/client'],
   },
   // Add explicit headers for static assets
   async headers() {
@@ -59,8 +60,17 @@ const nextConfig = {
             value: 'no-cache',
           },
         ],
-      },
+      }
     ];
+  },
+  // Ensure static files are properly served
+  assetPrefix: process.env.NODE_ENV === 'production' ? undefined : '',
+  // Prevent stale cache
+  generateEtags: false,
+  // Force trailing slash for consistent paths
+  trailingSlash: true,
+  webpack(config) {
+    return config;
   },
 };
 

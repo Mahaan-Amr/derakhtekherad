@@ -71,7 +71,7 @@ const Header: React.FC<HeaderProps> = ({
   const switchLanguage = () => {
     // Remove the current locale prefix and replace with the new one
     const newLocale = locale === 'de' ? 'fa' : 'de';
-    const pathWithoutLocale = pathname.replace(`/${locale}`, '');
+    const pathWithoutLocale = pathname?.replace(`/${locale}`, '') || '';
     router.push(`/${newLocale}${pathWithoutLocale}`);
   };
 

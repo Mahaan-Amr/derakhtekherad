@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Direct Logo Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .logo-container {
+      background-color: white;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .paths {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 20px;
+      margin-top: 20px;
+      width: 80%;
+      max-width: 500px;
+    }
+    .path-item {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .path-label {
+      font-weight: bold;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Direct Logo Test</h1>
+  
+  <div class="logo-container">
+    <!-- Direct image with no fallbacks -->
+    <img class="logo" src="/site-logo/logo.png" alt="Derakhte Kherad Logo">
+  </div>
+  
+  <div class="paths">
+    <h2>Path Information</h2>
+    <div class="path-item">
+      <div class="path-label">Absolute Path:</div>
+      <div id="absolute-path"></div>
+    </div>
+    <div class="path-item">
+      <div class="path-label">Relative Path:</div>
+      <div>/site-logo/logo.png</div>
+    </div>
+    <div class="path-item">
+      <div class="path-label">Document Base URL:</div>
+      <div id="base-url"></div>
+    </div>
+  </div>
+
+  <script>
+    // Show the actual path to help debug
+    document.getElementById('absolute-path').textContent = window.location.origin + '/site-logo/logo.png';
+    document.getElementById('base-url').textContent = document.baseURI;
+  </script>
+</body>
+</html> 

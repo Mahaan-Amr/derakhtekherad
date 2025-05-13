@@ -71,13 +71,6 @@ export default async function HomePage({
     signup: locale === 'de' ? 'Registrieren' : 'ثبت نام',
   };
   
-  // Get footer translations (for address, phone, etc.)
-  const footer = {
-    address: locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
-    email: 'info@derakhtekherad.com',
-    phone: locale === 'de' ? 'Festnetz: 071-36386652 | Mobil: 0936-0217684' : 'تلفن ثابت: ۰۷۱۳۶۳۸۶۶۵۲ | موبایل: ۰۹۳۶۰۲۱۷۶۸۴'
-  };
-  
   // Fetch hero slides
   let heroSlides: HeroSlide[] = [];
   try {

@@ -17,7 +17,7 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({ locale, className = '' }) =
   const [isSwitching, setIsSwitching] = useState(false);
   
   // Remove the current locale from the pathname
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/home';
+  const pathnameWithoutLocale = pathname?.replace(`/${locale}`, '') || '/home';
   
   // Switch to the other language
   const toggleLanguage = () => {

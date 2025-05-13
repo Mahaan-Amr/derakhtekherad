@@ -129,7 +129,7 @@ export function generateOrganizationSchema() {
     name: 'Derakhte Kherad',
     alternateName: 'درخت خرد',
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://derakhtekherad.com',
-    logo: `${process.env.NEXT_PUBLIC_APP_URL || 'https://derakhtekherad.com'}/images/logo.png`,
+    logo: `${process.env.NEXT_PUBLIC_APP_URL || 'https://derakhtekherad.com'}/site-logo/logo.svg`,
     sameAs: [
       'https://www.facebook.com/derakhtekherad',
       'https://www.instagram.com/derakhtekherad',
@@ -203,7 +203,7 @@ export function generateBlogPostSchema(post: any, locale: Locale) {
       name: 'Derakhte Kherad',
       logo: {
         '@type': 'ImageObject',
-        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://derakhtekherad.com'}/images/logo.png`
+        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://derakhtekherad.com'}/site-logo/logo.svg`
       }
     },
     description: excerpt,

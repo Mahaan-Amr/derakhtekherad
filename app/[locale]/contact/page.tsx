@@ -70,7 +70,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
     'name': 'Derakhte Kherad',
-    'image': 'https://derakhtekherad.com/images/logo.png',
+    'image': 'https://derakhtekherad.com/site-logo/new-logo.svg',
     'address': {
       '@type': 'PostalAddress',
       'streetAddress': locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
