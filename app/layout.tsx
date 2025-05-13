@@ -2,7 +2,7 @@ import './globals.css';
 import { Inter, Vazirmatn } from 'next/font/google';
 import type { Metadata } from 'next';
 import Providers from './providers';
-import CustomHead from './components/common/CustomHead';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const vazirmatn = Vazirmatn({ subsets: ['arabic'], variable: '--font-vazirmatn' });
@@ -44,8 +44,10 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning>
+      <head>
+        <Script src="/favicon-refresh.js" strategy="afterInteractive" />
+      </head>
       <body className={`${inter.variable} ${vazirmatn.variable}`}>
-        <CustomHead />
         <Providers>
           {children}
         </Providers>

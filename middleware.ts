@@ -37,10 +37,20 @@ const EXCLUDED_PATHS = [
   // Static assets
   '/uploads',
   '/images',
+  '/assets',
+  '/public',
   '/favicon.ico',
+  '/favicon.svg',
   '/robots.txt',
   '/sitemap.xml',
   '/site-logo',
+  // File extensions
+  '.svg',
+  '.ico',
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.gif',
   // API routes
   '/api/',
   // Other paths to exclude
@@ -52,8 +62,9 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
   // Check if the path should be excluded from internationalization
+  // Either by prefix or file extension
   const isExcludedPath = EXCLUDED_PATHS.some(path => 
-    pathname.startsWith(path)
+    pathname.startsWith(path) || pathname.endsWith(path)
   );
   
   // If it's an excluded path, don't modify the request
@@ -78,6 +89,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   // Skip all paths that should not be internationalized
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|favicon.svg|site-logo|public|images|assets).*)',
   ],
 }; 
