@@ -27,19 +27,26 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     ? 'آموزش زبان آلمانی در شیراز، ایران' 
     : 'Lernen Sie Deutsch in Shiraz, Iran';
   
+  // Add a version timestamp to force cache refresh
+  const cacheBreaker = `v=${Date.now()}`;
+  
   return {
     title,
     description,
     metadataBase: new URL('https://derakhtekherad.com'),
     icons: {
-      icon: '/favicon.ico',
-      apple: '/site-logo/logo.svg',
+      icon: [
+        { url: `/favicon.ico?${cacheBreaker}`, sizes: '32x32' },
+        { url: `/favicon.svg?${cacheBreaker}`, type: 'image/svg+xml' },
+        { url: `/site-logo/logo.svg?${cacheBreaker}`, type: 'image/svg+xml' }
+      ],
+      apple: `/site-logo/logo.svg?${cacheBreaker}`,
     },
     openGraph: {
       title,
       description,
       images: [{
-        url: '/site-logo/logo.svg',
+        url: `/site-logo/logo.svg?${cacheBreaker}`,
         width: 800,
         height: 800
       }],
@@ -50,7 +57,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       card: 'summary_large_image',
       title,
       description,
-      images: ['/site-logo/logo.svg'],
+      images: [`/site-logo/logo.svg?${cacheBreaker}`],
     },
   };
 }
