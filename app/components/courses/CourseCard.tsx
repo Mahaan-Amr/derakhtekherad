@@ -17,13 +17,12 @@ export default function CourseCard({ course, locale }: CourseCardProps) {
   const isRtl = locale === 'fa';
   
   // Format date according to locale
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (date: string) => {
     return new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    }).format(date);
+    }).format(new Date(date));
   };
   
   // Calculate course duration in weeks based on start and end dates
@@ -37,20 +36,6 @@ export default function CourseCard({ course, locale }: CourseCardProps) {
     return locale === 'de' 
       ? `${diffWeeks} Wochen`
       : `${diffWeeks} هفته`;
-  };
-  
-  // Format price according to locale
-  const formatPrice = (price: number) => {
-    // Format number with comma separators
-    const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price);
-    
-    // Add the appropriate currency text
-    return locale === 'de' 
-      ? `${formattedNumber} Toman` 
-      : `${formattedNumber} تومان`;
   };
   
   // Add this function to truncate HTML content safely
@@ -74,7 +59,7 @@ export default function CourseCard({ course, locale }: CourseCardProps) {
           src={course.thumbnail || '/images/placeholder.jpg'}
           fallbackSrc="/images/placeholder.jpg"
           alt={locale === 'de' ? course.title : course.titleFa}
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover"
           width={800}
           height={450}
         />
@@ -118,11 +103,7 @@ export default function CourseCard({ course, locale }: CourseCardProps) {
           </div>
         </div>
         
-        <div className="mt-6 flex items-center justify-between">
-          <span className="text-lg font-bold text-primary">
-            {formatPrice(course.price)}
-          </span>
-          
+        <div className="mt-6 flex items-center justify-end">
           <Link href={`/${locale}/courses/${course.id}`}>
             <Button
               variant="default"

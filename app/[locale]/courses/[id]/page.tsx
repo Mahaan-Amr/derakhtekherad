@@ -104,7 +104,6 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
       location: locale === 'de' ? 'Ort' : 'مکان',
       timeSlot: locale === 'de' ? 'Zeitfenster' : 'زمان برگزاری',
       capacity: locale === 'de' ? 'Kapazität' : 'ظرفیت',
-      price: locale === 'de' ? 'Preis' : 'قیمت',
       teacher: locale === 'de' ? 'Lehrer' : 'استاد',
       backToCourses: locale === 'de' ? 'Zurück zu Kursen' : 'بازگشت به دوره‌ها',
       enroll: locale === 'de' ? 'Jetzt anmelden' : 'ثبت نام',
@@ -152,20 +151,6 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
     const diffWeeks = Math.ceil(diffDays / 7);
     
     return `${diffWeeks} ${translations.course.weeks}`;
-  };
-  
-  // Format price according to locale
-  const formatPrice = (price: number) => {
-    // Format number with comma separators
-    const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price);
-    
-    // Add the appropriate currency text
-    return locale === 'de' 
-      ? `${formattedNumber} Toman` 
-      : `${formattedNumber} تومان`;
   };
   
   const isRtl = locale === 'fa';
@@ -232,12 +217,12 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {/* Course Image */}
-              <div className="rounded-xl overflow-hidden">
+              <div className="rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center min-h-[300px]">
                 <ImageWithFallback
                   src={course.thumbnail || '/images/placeholder.jpg'}
                   fallbackSrc="/images/placeholder.jpg"
                   alt={locale === 'de' ? course.title : course.titleFa}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-contain max-h-[500px]"
                   width={800}
                   height={500}
                   priority
@@ -328,15 +313,11 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
                 </div>
                 
                 <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-6">
-                  <div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{translations.course.price}</span>
-                    <p className="text-2xl font-bold text-primary">{formatPrice(course.price)}</p>
-                  </div>
-                  
-                  <Link href={`/${locale}/enrollment?courseId=${course.id}`}>
+                  <Link href={`/${locale}/enrollment?courseId=${course.id}`} className="flex-1">
                     <Button
                       variant="default" 
                       size="lg"
+                      className="w-full"
                     >
                       {translations.course.enroll}
                     </Button>

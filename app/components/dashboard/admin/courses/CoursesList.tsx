@@ -45,11 +45,7 @@ interface CourseTranslations {
   teacher: string;
   level: string;
   noDataFound: string;
-  priceLabel: string;
-  featuredLabel: string;
   featuredStatus: string;
-  featuredYes: string;
-  featuredNo: string;
   [key: string]: string;
 }
 
@@ -90,10 +86,6 @@ const CoursesList: React.FC<CoursesListProps> = ({ locale, translations, onSelec
 
       const data = await response.json();
       console.log('Courses fetched for admin dashboard:', data);
-      
-      if (data?.courses?.length > 0) {
-        console.log('First course price:', data.courses[0].price, 'Type:', typeof data.courses[0].price);
-      }
       
       const courseData = data?.courses || [];
       setCourses(courseData);
@@ -350,29 +342,23 @@ const CoursesList: React.FC<CoursesListProps> = ({ locale, translations, onSelec
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       {translations.titleLabel}
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.teacher}
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {translations.teacherLabel || 'Teacher'}
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.level}
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {translations.levelLabel}
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.priceLabel || 'Price'}
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       {translations.startDateLabel}
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.activeStatus}
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {translations.statusLabel}
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.featuredLabel || (locale === 'de' ? 'Empfohlen' : 'پیشنهاد ویژه')}
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      {translations.actions}
+                    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {translations.actionsLabel}
                     </th>
                   </tr>
                 </thead>
@@ -410,20 +396,6 @@ const CoursesList: React.FC<CoursesListProps> = ({ locale, translations, onSelec
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {(() => {
-                          // Format number with comma separators
-                          const formattedNumber = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'fa-IR', {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0
-                          }).format(course.price);
-                          
-                          // Add the appropriate currency text
-                          return locale === 'de' 
-                            ? `${formattedNumber} Toman` 
-                            : `${formattedNumber} تومان`;
-                        })()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         {formatDate(course.startDate)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -433,17 +405,6 @@ const CoursesList: React.FC<CoursesListProps> = ({ locale, translations, onSelec
                             : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                         }`}>
                           {course.isActive ? translations.active : translations.inactive}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          course.featured 
-                            ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' 
-                            : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
-                        }`}>
-                          {course.featured 
-                            ? (translations.featuredYes || (locale === 'de' ? 'Ja' : 'بله'))
-                            : (translations.featuredNo || (locale === 'de' ? 'Nein' : 'خیر'))}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

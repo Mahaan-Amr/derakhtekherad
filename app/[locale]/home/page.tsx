@@ -172,7 +172,6 @@ export default async function HomePage({
       descriptionFa: course.descriptionFa,
       level: course.level,
       capacity: course.capacity,
-      price: Number(course.price),
       startDate: course.startDate.toISOString(),
       endDate: course.endDate.toISOString(),
       timeSlot: course.timeSlot,

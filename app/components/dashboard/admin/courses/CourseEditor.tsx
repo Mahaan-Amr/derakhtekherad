@@ -45,7 +45,6 @@ interface CourseTranslations {
   teacher: string;
   level: string;
   noDataFound: string;
-  priceLabel: string;
   featuredStatus: string;
   [key: string]: string;
 }
@@ -76,7 +75,6 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
     descriptionFa: '',
     level: 'A1.1',
     capacity: 10,
-    price: 0,
     startDate: '',
     endDate: '',
     timeSlot: '',
@@ -101,8 +99,6 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
       const startDateStr = new Date(course.startDate).toISOString().substring(0, 10);
       const endDateStr = new Date(course.endDate).toISOString().substring(0, 10);
       
-      console.log('Course price from props:', course.price, 'Type:', typeof course.price);
-      
       setFormData({
         title: course.title,
         titleFa: course.titleFa,
@@ -110,7 +106,6 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
         descriptionFa: course.descriptionFa || '',
         level: course.level,
         capacity: course.capacity,
-        price: course.price || 0,
         startDate: startDateStr,
         endDate: endDateStr,
         timeSlot: course.timeSlot,
@@ -150,19 +145,10 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     
-    // Handle price as a float, other numeric fields as integers
-    if (name === 'price') {
-      console.log('Price input changed:', value, 'Parsed value:', parseFloat(value) || 0);
-      setFormData(prev => ({
-        ...prev,
-        [name]: parseFloat(value) || 0
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: parseInt(value, 10) || 0
-      }));
-    }
+    setFormData(prev => ({
+      ...prev,
+      [name]: parseInt(value, 10) || 0
+    }));
   };
 
   // Handle file change for thumbnail upload
@@ -316,52 +302,6 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    console.log('Submitting form with price:', formData.price, 'Type:', typeof formData.price);
-    
-    // Check if token is valid
-    if (!token) {
-      console.error('No authentication token available');
-      toast.error(
-        locale === 'de'
-          ? 'Keine Authentifizierung. Bitte melden Sie sich erneut an.'
-          : 'بدون احراز هویت. لطفا دوباره وارد شوید.'
-      );
-      return;
-    }
-    
-    // Check token expiration and refresh if needed
-    try {
-      const tokenParts = token.split('.');
-      if (tokenParts.length === 3) {
-        const payload = JSON.parse(atob(tokenParts[1]));
-        if (payload.exp) {
-          const now = Math.floor(Date.now() / 1000);
-          const timeLeft = payload.exp - now;
-          console.log(`Token expires in ${timeLeft} seconds (${timeLeft / 60} minutes)`);
-          
-          if (timeLeft <= 300) { // Less than 5 minutes remaining or expired
-            console.log('Token is about to expire or already expired, refreshing...');
-            const refreshed = await refreshToken();
-            if (refreshed) {
-              console.log('Token refreshed successfully');
-            } else {
-              console.error('Failed to refresh token');
-              if (timeLeft <= 0) {
-                toast.error(
-                  locale === 'de'
-                    ? 'Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.'
-                    : 'نشست شما منقضی شده است. لطفا دوباره وارد شوید.'
-                );
-                return;
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error checking token expiration:', error);
-    }
     
     // Validate required fields
     const requiredFields = ['title', 'titleFa', 'level', 'capacity', 'startDate', 'endDate', 'timeSlot', 'location', 'teacherId'];
@@ -600,25 +540,6 @@ const CourseEditor: React.FC<CourseEditorProps> = ({
                 value={formData.capacity}
                 onChange={handleNumberChange}
                 min="1"
-                max="50"
-                className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                required
-              />
-            </div>
-            
-            {/* Price */}
-            <div className="space-y-2">
-              <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {translations.priceLabel || 'Price'} *
-              </label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleNumberChange}
-                min="0"
-                step="1"
                 className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 required
               />

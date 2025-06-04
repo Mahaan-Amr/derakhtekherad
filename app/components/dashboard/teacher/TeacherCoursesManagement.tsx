@@ -167,7 +167,7 @@ const TeacherCoursesManagement: React.FC<TeacherCoursesManagementProps> = ({
       >
         <div className="flex flex-col h-full">
           {/* Course thumbnail */}
-          <div className="mb-4 relative h-40 w-full rounded-lg bg-gray-100 dark:bg-gray-700 overflow-hidden">
+          <div className="mb-4 relative h-40 w-full rounded-lg overflow-hidden">
             {course.thumbnail ? (
               <Image
                 src={course.thumbnail}
@@ -177,7 +177,7 @@ const TeacherCoursesManagement: React.FC<TeacherCoursesManagementProps> = ({
                 style={{ objectFit: 'cover' }}
               />
             ) : (
-              <div className="flex items-center justify-center h-full">
+              <div className="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700">
                 <svg 
                   className="h-16 w-16 text-gray-400 dark:text-gray-500" 
                   fill="none" 

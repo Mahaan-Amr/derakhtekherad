@@ -15,7 +15,7 @@ export interface Course {
   descriptionFa: string | null;
   level: string;
   capacity: number;
-  price: number;
+  price?: number;
   startDate: string;
   endDate: string;
   timeSlot: string;

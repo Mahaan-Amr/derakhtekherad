@@ -46,11 +46,7 @@ interface CourseTranslations {
   orderIndex: string;
   lessonCount: string;
   dragToReorder: string;
-  priceLabel: string;
-  featuredLabel: string;
   featuredStatus: string;
-  featuredYes: string;
-  featuredNo: string;
   [key: string]: string;
 }
 

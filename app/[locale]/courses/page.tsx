@@ -120,12 +120,7 @@ export default async function CoursesPage({
         'url': `${process.env.NEXT_PUBLIC_APP_URL}/${locale}/courses/${course.id}`,
         'startDate': course.startDate,
         'endDate': course.endDate,
-        'inLanguage': 'de',
-        'offers': {
-          '@type': 'Offer',
-          'price': course.price,
-          'priceCurrency': 'IRR'
-        }
+        'inLanguage': 'de'
       }
     }))
   };
