@@ -74,7 +74,7 @@ export default function FloatingContactButton({ locale, translations }: Floating
           {/* Close button */}
           <button
             onClick={toggleOpen}
-            className="flex items-center justify-center w-10 h-10 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-900 transition-colors"
+            className="flex items-center justify-center w-10 h-10 bg-gray-600 dark:bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 dark:hover:bg-gray-900 transition-colors"
             aria-label="Close contact options"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

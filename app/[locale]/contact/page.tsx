@@ -73,7 +73,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
     'image': 'https://derakhtekherad.com/site-logo/new-logo.svg',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
+              'streetAddress': locale === 'de' ? 'Kohye Vahdat, Fereshteh Straße, Fereshteh 2 Gasse' : 'کوی وحدت، خیابان فرشته، کوچه فرشته 2',
       'addressLocality': 'Shiraz',
       'addressRegion': 'Fars',
       'postalCode': '123456',
@@ -159,8 +159,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
                         </h4>
                         <p className="mt-1 text-gray-500 dark:text-gray-400">
                           {locale === 'de' 
-                            ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt'
-                            : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا'
+                                            ? 'Kohye Vahdat, Fereshteh Straße, Fereshteh 2 Gasse'
+                : 'کوی وحدت، خیابان فرشته، کوچه فرشته 2'
                           }
                         </p>
                       </div>

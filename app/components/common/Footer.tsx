@@ -35,19 +35,19 @@ export default function Footer({ locale, translations, about, quickLinks, contac
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1 - About */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-primary">{about.title}</h3>
-            <p className="text-gray-300 mb-4">{about.description}</p>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">{about.description}</p>
             <div className="flex space-x-4 rtl:space-x-reverse">
               <a 
                 href="https://instagram.com/derakhtekherad" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -58,7 +58,7 @@ export default function Footer({ locale, translations, about, quickLinks, contac
                 href="https://t.me/derakhtekherad" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                 aria-label="Telegram"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@ export default function Footer({ locale, translations, about, quickLinks, contac
                 href="https://wa.me/989360217684" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                 aria-label="WhatsApp"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ export default function Footer({ locale, translations, about, quickLinks, contac
                   </svg>
                   <Link 
                     href={link.href} 
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     {link.title}
                   </Link>
@@ -106,7 +106,7 @@ export default function Footer({ locale, translations, about, quickLinks, contac
           {/* Column 3 - Contact */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-primary">{contact.title}</h3>
-            <div className="text-gray-300 space-y-3">
+            <div className="text-gray-600 dark:text-gray-300 space-y-3">
               <div className={`flex items-start`}>
                 <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -139,9 +139,9 @@ export default function Footer({ locale, translations, about, quickLinks, contac
         </div>
         
         {/* Footer Bottom - Copyright and Links */}
-        <div className="mt-8 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-8 pt-8 border-t border-gray-300 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0 text-sm">
-            <p className="text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400">
               &copy; {currentYear} Derakhte Kherad. {translations.rights}.
             </p>
           </div>
@@ -149,13 +149,13 @@ export default function Footer({ locale, translations, about, quickLinks, contac
           <div className="flex gap-4 text-sm">
             <Link 
               href={`/${locale}/privacy`} 
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               {locale === 'de' ? 'Datenschutz' : 'حریم خصوصی'}
             </Link>
             <Link 
               href={`/${locale}/terms`} 
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               {locale === 'de' ? 'AGB' : 'شرایط استفاده'}
             </Link>

@@ -33,7 +33,7 @@ export function getFooterData(locale: Locale, navItems?: any) {
     },
     contact: {
       title: locale === 'de' ? 'Kontakt' : 'تماس با ما',
-      address: locale === 'de' ? 'Kohye Vahdat, Gasse gegenüber dem Negin Parkplatz (Fereshteh 2), neben dem Yara Supermarkt' : 'کوی وحدت، کوچه روبروی پارکینگ نگین(فرشته 2)، جنب سوپر مارکت یارا',
+      address: locale === 'de' ? 'Kohye Vahdat, Fereshteh Straße, Fereshteh 2 Gasse' : 'کوی وحدت، خیابان فرشته، کوچه فرشته 2',
       email: 'info@derakhtekherad.com',
       phone: locale === 'de' ? 'Festnetz: 071-36386652 | Mobil: 0936-0217684' : 'تلفن ثابت: ۰۷۱۳۶۳۸۶۶۵۲ | موبایل: ۰۹۳۶۰۲۱۷۶۸۴'
     }
