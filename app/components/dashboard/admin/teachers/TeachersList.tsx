@@ -142,13 +142,13 @@ export default function TeachersList({
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onEditTeacher(teacher)}
-                    className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                    className="px-3 py-1 bg-primary text-white text-sm rounded hover:bg-primary-dark"
                   >
                     {translations.actions.edit}
                   </button>
                   <button
                     onClick={() => handleDelete(teacher.id)}
-                    className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
+                    className="px-3 py-1 bg-destructive text-destructive-foreground text-sm rounded hover:bg-destructive/90"
                   >
                     {translations.actions.delete}
                   </button>

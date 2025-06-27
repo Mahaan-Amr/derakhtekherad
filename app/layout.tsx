@@ -46,6 +46,37 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <head>
         <Script src="/favicon-refresh.js" strategy="afterInteractive" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Initialize theme immediately to prevent FOUC
+                  const savedTheme = localStorage.getItem('colorTheme') || 'default';
+                  const savedDarkMode = localStorage.getItem('theme');
+                  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  
+                  // Apply color theme
+                  const validThemes = ['default', 'emerald', 'rose', 'blue', 'amber', 'ocean', 'forest', 'olive', 'sunset', 'midnight'];
+                  if (validThemes.includes(savedTheme)) {
+                    document.documentElement.classList.add('theme-' + savedTheme);
+                  } else {
+                    document.documentElement.classList.add('theme-default');
+                  }
+                  
+                  // Apply dark mode
+                  const shouldUseDarkMode = savedDarkMode === 'dark' || (!savedDarkMode && systemPrefersDark);
+                  if (shouldUseDarkMode) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {
+                  // Fallback to default theme if there's an error
+                  document.documentElement.classList.add('theme-default');
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${vazirmatn.variable}`}>
         <Providers>

@@ -71,15 +71,39 @@ export default function ChartersPage({
       navItems={translations.navItems}
       footer={translations.footer}
     >
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-          {translations.charters.pageTitle}
-        </h1>
-        <p className="text-lg text-center mb-12 max-w-3xl mx-auto">
-          {translations.charters.subtitle}
-        </p>
+      {/* Hero Section with Background */}
+      <div className="relative overflow-hidden text-white" style={{
+        background: `linear-gradient(to bottom right, var(--color-primary-dark), var(--color-primary))`
+      }}>
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)" />
+          </svg>
+        </div>
         
-        <ChartersList locale={locale} />
+        <div className={`container mx-auto px-4 py-24 relative z-10 ${isRtl ? 'rtl' : 'ltr'}`}>
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              {translations.charters.pageTitle}
+            </h1>
+            <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto">
+              {translations.charters.subtitle}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Charters Content Section */}
+      <div className={`bg-gray-50 dark:bg-gray-900 py-16 ${isRtl ? 'rtl' : 'ltr'}`}>
+        <div className="container mx-auto px-4">
+          <ChartersList locale={locale} />
+        </div>
       </div>
     </MainLayout>
   );

@@ -531,7 +531,7 @@ export default function HeroSlider({
               
               {buttonTwoText && slide.buttonTwoLink && (
                 <Link href={slide.buttonTwoLink} className="pointer-events-auto">
-                  <Button variant="secondary" className="min-w-[120px]">
+                  <Button variant="accent" className="min-w-[120px]">
                     {buttonTwoText}
                   </Button>
                 </Link>
@@ -577,7 +577,7 @@ export default function HeroSlider({
               onClick={(e) => handleIndicatorClick(e, index)}
               disabled={isAnimating || isDragging}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/70'
+                index === currentSlide ? 'bg-indicator scale-125' : 'bg-indicator-inactive hover:bg-indicator-hover'
               } ${isAnimating || isDragging ? 'cursor-not-allowed' : ''}`}
               aria-label={`Go to slide ${index + 1}`}
             />

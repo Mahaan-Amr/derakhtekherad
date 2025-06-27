@@ -84,13 +84,13 @@ export default function UsersList({ users, locale, translations, onEditUser, onD
                 <div className="flex gap-2">
                   <button
                     onClick={() => onEditUser(user)}
-                    className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+                    className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary-dark text-sm"
                   >
                     {translations.edit}
                   </button>
                   <button
                     onClick={() => onDeleteUser(user.id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
+                    className="px-3 py-1 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 text-sm"
                   >
                     {translations.delete}
                   </button>

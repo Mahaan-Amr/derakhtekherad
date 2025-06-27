@@ -44,6 +44,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         'theme-ocean', 'theme-forest', 'theme-olive', 'theme-sunset', 'theme-midnight'
       );
       document.documentElement.classList.add(`theme-${savedTheme}`);
+    } else {
+      // Apply default theme if no saved theme
+      document.documentElement.classList.add('theme-default');
     }
 
     // Check for dark mode preference

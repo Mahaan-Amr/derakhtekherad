@@ -178,7 +178,7 @@ const StudentDashboardContent: React.FC<StudentDashboardContentProps> = ({
                   </div>
                   <div className="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
                     <div 
-                      className="h-2 bg-blue-600 rounded-full" 
+                      className="h-2 bg-primary rounded-full" 
                       style={{ width: `${course.progress}%` }}
                     ></div>
                   </div>
@@ -188,7 +188,7 @@ const StudentDashboardContent: React.FC<StudentDashboardContentProps> = ({
                 </p>
               </div>
               <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700">
-                <button className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                <button className="w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary-dark">
                   {locale === 'de' ? 'Zum Kurs gehen' : 'رفتن به دوره'}
                 </button>
               </div>

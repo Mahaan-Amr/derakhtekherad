@@ -10,22 +10,43 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#900000',
-          dark: '#700000',
-          light: '#ad0000',
+          DEFAULT: 'var(--color-primary)',
+          dark: 'var(--color-primary-dark)',
+          light: 'var(--color-primary-light)',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: '#4B5563',
-          dark: '#1F2937',
-          light: '#F3F4F6',
+          DEFAULT: 'var(--color-secondary)',
+          dark: 'var(--color-secondary-dark)',
+          light: 'var(--color-secondary-light)',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
-        accent: 'var(--color-accent)',
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'var(--color-accent)',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
         background: 'var(--color-background)',
         surface: 'var(--color-surface)',
         border: 'var(--color-border)',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        foreground: 'hsl(var(--foreground))',
         text: {
           primary: 'var(--color-text-primary)',
           secondary: 'var(--color-text-secondary)',
+        },
+        indicator: {
+          DEFAULT: 'var(--color-indicator)',
+          inactive: 'var(--color-indicator-inactive)',
+          hover: 'var(--color-indicator-hover)',
         },
       },
       fontFamily: {

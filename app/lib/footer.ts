@@ -18,8 +18,8 @@ export function getFooterData(locale: Locale, navItems?: any) {
     about: {
       title: locale === 'de' ? 'Über' : 'درباره ما',
       description: locale === 'de' 
-        ? 'Derakhte Kherad ist ein Institut für persische Sprache und Kultur mit Sitz in Shiraz, Iran.' 
-        : 'درخت خرد یک موسسه آموزش زبان و فرهنگ فارسی در شیراز، ایران است.'
+        ? 'Derakhte Kherad ist eine spezialisierte Akademie für deutsche Sprache und Kultur mit Sitz in Shiraz, Iran.' 
+        : 'درخت خرد یک آکادمی آموزش تخصصی زبان و فرهنگ آلمانی در شیراز، ایران است.'
     },
     quickLinks: {
       title: locale === 'de' ? 'Schnelllinks' : 'لینک‌های سریع',

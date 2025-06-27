@@ -50,7 +50,7 @@ export default function FloatingContactButton({ locale, translations }: Floating
           {/* Call */}
           <a
             href="tel:+987136386652"
-            className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+            className="flex items-center bg-primary text-white px-4 py-2 rounded-full shadow-lg hover:bg-primary-dark transition-colors"
             onClick={() => setIsOpen(false)}
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,7 +62,7 @@ export default function FloatingContactButton({ locale, translations }: Floating
           {/* Email */}
           <a
             href="mailto:info@derakhtekherad.com"
-            className="flex items-center bg-yellow-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+            className="flex items-center bg-secondary text-white px-4 py-2 rounded-full shadow-lg hover:bg-secondary-dark transition-colors"
             onClick={() => setIsOpen(false)}
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

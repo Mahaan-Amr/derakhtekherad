@@ -179,7 +179,7 @@ const TeacherDashboardContent: React.FC<TeacherDashboardContentProps> = ({
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
                         <div 
-                          className="h-2 bg-blue-600 rounded-full" 
+                          className="h-2 bg-primary rounded-full" 
                           style={{ width: `${course.progress}%` }}
                         ></div>
                       </div>
