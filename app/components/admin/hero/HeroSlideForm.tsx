@@ -247,7 +247,7 @@ export default function HeroSlideForm({
     setIsUploading(true);
     
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/hero/upload', {
         method: 'POST',
         body: formData,
       });
