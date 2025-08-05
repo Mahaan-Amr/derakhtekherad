@@ -58,6 +58,7 @@ model Admin {
   statistics   Statistic[]
   blogPosts    BlogPost[]
   charters     Charter[]
+  aboutPages   AboutPage[]
 }
 
 // Teacher model
@@ -457,4 +458,56 @@ model GlobalSettings {
   updatedAt     DateTime @updatedAt
   
   @@map("global_settings")
+}
+
+// AboutPage model for managing the About Us page content
+model AboutPage {
+  id            String   @id @default(cuid())
+  
+  // Main title
+  titleDe       String   @default("Über")
+  titleFa       String   @default("درباره ما")
+  
+  // Story section
+  storyTitleDe  String   @default("Unsere Geschichte")
+  storyTitleFa  String   @default("داستان ما")
+  storyContentDe String  @db.Text
+  storyContentFa String  @db.Text
+  storyImage    String?  // URL to image
+  
+  // Mission section
+  missionTitleDe String  @default("Unsere Mission")
+  missionTitleFa String  @default("ماموریت ما")
+  missionContentDe String @db.Text
+  missionContentFa String @db.Text
+  
+  // Values section
+  valuesTitleDe String   @default("Unsere Werte")
+  valuesTitleFa String   @default("ارزش‌های ما")
+  
+  // Value cards (3 cards)
+  value1TitleDe String   @default("Qualität")
+  value1TitleFa String   @default("کیفیت")
+  value1ContentDe String @db.Text
+  value1ContentFa String @db.Text
+  
+  value2TitleDe String   @default("Innovation")
+  value2TitleFa String   @default("نوآوری")
+  value2ContentDe String @db.Text
+  value2ContentFa String @db.Text
+  
+  value3TitleDe String   @default("Inklusion")
+  value3TitleFa String   @default("شمول")
+  value3ContentDe String @db.Text
+  value3ContentFa String @db.Text
+  
+  // Metadata
+  adminId       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  admin         Admin    @relation(fields: [adminId], references: [id])
+  
+  @@map("about_page")
 }
