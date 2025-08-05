@@ -12,6 +12,7 @@ import { Locale } from '@/app/i18n/settings';
 import ThemeSelector from '../ui/ThemeSelector';
 import Image from 'next/image';
 import LangSwitcher from '../common/LangSwitcher';
+import { useTheme } from '@/app/context/ThemeContext';
 
 interface HeaderProps {
   locale: Locale;
@@ -31,16 +32,13 @@ interface HeaderProps {
     consultation?: string;
     charters?: string;
   };
-  darkMode: boolean;
-  toggleDarkMode: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
   locale,
   translations,
-  darkMode,
-  toggleDarkMode,
 }) => {
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
@@ -99,8 +97,8 @@ const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Logo locale={locale} variant={darkMode ? 'light' : 'dark'} showText={false} className="md:hidden" />
-              <Logo locale={locale} variant={darkMode ? 'light' : 'dark'} className="hidden md:flex" />
+                          <Logo locale={locale} variant={isDarkMode ? 'light' : 'dark'} showText={false} className="md:hidden" />
+            <Logo locale={locale} variant={isDarkMode ? 'light' : 'dark'} className="hidden md:flex" />
             </div>
             
             {/* Mobile-only important links */}
@@ -168,7 +166,7 @@ const Header: React.FC<HeaderProps> = ({
           <div className="hidden md:flex md:items-center space-x-4 rtl:space-x-reverse">
             {/* Theme selector */}
             <div className="mr-2">
-              <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              <ThemeSelector locale={locale} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
             </div>
 
             {/* Language switcher */}
@@ -224,7 +222,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center justify-between px-3 py-2">
               {/* Theme selector */}
               <div className="text-gray-500 dark:text-gray-400">
-                <ThemeSelector locale={locale} isDarkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+                <ThemeSelector locale={locale} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
               </div>
               
               {/* Language Switcher */}

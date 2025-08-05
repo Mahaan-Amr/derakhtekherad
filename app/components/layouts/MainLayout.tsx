@@ -49,50 +49,14 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children, locale, navItems = {}, footer }: MainLayoutProps) {
-  // Dark mode state
-  const [darkMode, setDarkMode] = useState(false);
   // Add the missing isOpen state for dropdown
   const [isOpen, setIsOpen] = useState(false);
   
-  // Initialize theme once component mounts
-  useEffect(() => {
-    // Check if user has previously set a theme preference
-    const savedDarkMode = localStorage.getItem('theme');
-    const savedColorTheme = localStorage.getItem('colorTheme') || 'default';
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    // Initialize dark mode
-    if (savedDarkMode === 'dark' || (!savedDarkMode && prefersDark)) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
-    
-    // Initialize color theme
-    document.documentElement.classList.remove(
-      'theme-default', 'theme-emerald', 'theme-rose', 'theme-blue', 'theme-amber',
-      'theme-ocean', 'theme-forest', 'theme-olive', 'theme-sunset', 'theme-midnight'
-    );
-    document.documentElement.classList.add(`theme-${savedColorTheme}`);
-  }, []);
-  
-  // Handle theme toggle
-  const toggleDarkMode = () => {
-    if (darkMode) {
-      setDarkMode(false);
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-  };
-
   // Toggle dropdown function
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  
+
   // Navigation translations for Header
   const navigationTranslations = {
     home: navItems?.home || (locale === 'de' ? 'Startseite' : 'صفحه اصلی'),
@@ -122,8 +86,6 @@ export default function MainLayout({ children, locale, navItems = {}, footer }: 
       <Header 
         locale={locale} 
         translations={navigationTranslations}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
       />
       <main className="flex-grow w-full">
         {children}
