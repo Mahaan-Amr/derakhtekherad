@@ -18,24 +18,16 @@ interface ThemeSelectorProps {
 }
 
 export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, className, isAdminUser = false }: ThemeSelectorProps) {
-  const { isAdminUser: themeAdminUser } = useTheme();
+  const { isAdminUser: themeAdminUser, theme: currentTheme, setTheme, isLoading } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<ColorTheme>('default');
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const isRtl = locale === 'fa';
   const { t } = useTranslation();
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0, left: 0 });
 
-  // Initialize theme on component mount
-  useEffect(() => {
-    // Get saved theme from localStorage
-    const savedTheme = localStorage.getItem('colorTheme') as ColorTheme || 'default';
-    setCurrentTheme(savedTheme);
-  }, []);
-
   // Handle theme change
-  const changeTheme = (theme: ColorTheme) => {
+  const changeTheme = async (theme: ColorTheme) => {
     // Only allow admin users to change color theme
     if (!themeAdminUser) {
       console.log('Only admin users can change the color theme');
@@ -43,18 +35,12 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, clas
       return;
     }
     
-    setCurrentTheme(theme);
-    localStorage.setItem('colorTheme', theme);
-    
-    // Remove all theme classes and add the selected one
-    document.documentElement.classList.remove(
-      'theme-default', 'theme-emerald', 'theme-rose', 'theme-blue', 'theme-amber',
-      'theme-ocean', 'theme-forest', 'theme-olive', 'theme-sunset', 'theme-midnight'
-    );
-    document.documentElement.classList.add(`theme-${theme}`);
-    
-    // Close dropdown after selection
-    setIsOpen(false);
+    try {
+      await setTheme(theme);
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Error changing theme:', error);
+    }
   };
 
   // Handle dark mode toggle
@@ -162,9 +148,11 @@ export default function ThemeSelector({ locale, isDarkMode, toggleDarkMode, clas
         ref={dropdownRef}
         className={cn(
           "flex h-10 w-10 items-center justify-center rounded-md border border-input bg-background",
-          className
+          className,
+          isLoading && "opacity-50 cursor-not-allowed"
         )}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => !isLoading && setIsOpen(!isOpen)}
+        disabled={isLoading}
         aria-label={locale === 'de' ? 'Thema und Modus ändern' : 'تغییر تم و حالت'}
       >
         <div className="flex items-center">

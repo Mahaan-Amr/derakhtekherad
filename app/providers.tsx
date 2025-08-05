@@ -9,6 +9,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getClientOptions } from './i18n/client';
 import resourcesToBackend from 'i18next-resources-to-backend';
+import ThemeLoader from './components/ui/ThemeLoader';
 
 // Initialize i18next instance for providers
 if (!i18next.isInitialized) {
@@ -38,7 +39,9 @@ export default function Providers({ children }: ProvidersProps) {
     <AuthProvider>
       <ThemeProvider>
         <I18nextProvider i18n={i18next}>
-          {children}
+          <ThemeLoader>
+            {children}
+          </ThemeLoader>
         </I18nextProvider>
       </ThemeProvider>
     </AuthProvider>
