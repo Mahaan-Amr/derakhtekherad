@@ -260,7 +260,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                   href={`/${locale}/blog`}
                   className={`px-4 py-2 rounded-full ${
                     !categorySlug 
-                      ? 'bg-primary text-white !text-white font-bold shadow-md hover:bg-primary-dark hover:!text-white'
+                      ? 'bg-primary !text-white font-bold shadow-md hover:bg-primary-dark'
                       : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -272,7 +272,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                     href={`/${locale}/blog?category=${category.slug}`}
                     className={`px-4 py-2 rounded-full ${
                       categorySlug === category.slug 
-                        ? 'bg-primary text-white !text-white font-bold shadow-md hover:bg-primary-dark hover:!text-white' 
+                        ? 'bg-primary !text-white font-bold shadow-md hover:bg-primary-dark' 
                         : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                     }`}
                   >
