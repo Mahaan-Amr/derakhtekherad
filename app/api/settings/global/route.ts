@@ -4,14 +4,11 @@ import { prisma } from '@/lib/prisma';
 // GET global settings
 export async function GET(request: NextRequest) {
   try {
-    // Temporarily bypass Prisma client issue by using raw query
-    const settings = await prisma.$queryRaw`
-      SELECT key, value, description, "updatedBy", "createdAt", "updatedAt"
-      FROM global_settings
-    ` as any[];
+    // Use Prisma ORM to fetch all global settings
+    const settings = await prisma.globalSettings.findMany();
     
     // Convert to key-value object
-    const settingsObject = (settings as any[]).reduce((acc: Record<string, string>, setting: any) => {
+    const settingsObject = settings.reduce((acc: Record<string, string>, setting) => {
       acc[setting.key] = setting.value;
       return acc;
     }, {} as Record<string, string>);
@@ -42,17 +39,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use raw query to upsert the setting
-    const result = await prisma.$executeRaw`
-      INSERT INTO global_settings (id, key, value, description, "updatedBy", "createdAt", "updatedAt")
-      VALUES (gen_random_uuid(), ${key}, ${value}, ${description || null}, ${'admin'}, NOW(), NOW())
-      ON CONFLICT (key) 
-      DO UPDATE SET 
-        value = EXCLUDED.value,
-        description = EXCLUDED.description,
-        "updatedBy" = EXCLUDED."updatedBy",
-        "updatedAt" = NOW()
-    `;
+    // Use Prisma's upsert instead of raw query to avoid UUID function issues
+    const result = await prisma.globalSettings.upsert({
+      where: { key },
+      update: {
+        value,
+        description: description || null,
+        updatedBy: 'admin',
+        updatedAt: new Date(),
+      },
+      create: {
+        key,
+        value,
+        description: description || null,
+        updatedBy: 'admin',
+      },
+    });
 
     return NextResponse.json({ success: true, key, value });
   } catch (error) {
@@ -80,9 +82,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await prisma.$executeRaw`
-      DELETE FROM global_settings WHERE key = ${key}
-    `;
+    await prisma.globalSettings.delete({
+      where: { key },
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {
