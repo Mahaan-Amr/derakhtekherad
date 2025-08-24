@@ -21,7 +21,15 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(charters);
+    // Create response with cache control headers to prevent browser caching
+    const response = NextResponse.json(charters);
+    
+    // Set cache control headers to ensure fresh data is always fetched
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Error fetching charters:', error);
     return NextResponse.json(

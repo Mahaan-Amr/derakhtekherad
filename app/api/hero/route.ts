@@ -18,7 +18,15 @@ export async function GET(req: NextRequest) {
       }
     });
     
-    return NextResponse.json(heroSlides, { status: 200 });
+    // Create response with cache control headers to prevent browser caching
+    const response = NextResponse.json(heroSlides, { status: 200 });
+    
+    // Set cache control headers to ensure fresh data is always fetched
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error: any) {
     console.error('Error fetching hero slides:', error);
     
